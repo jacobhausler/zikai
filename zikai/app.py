@@ -85,6 +85,7 @@ def create_app(engine: Engine | None = None) -> FastAPI:
 
     @app.get("/healthz")
     def healthz():
+        _maybe_reload()  # throttled by its own 5s clock; probes see fresh counts
         e: Engine = app.state.engine
         return {"ok": True, "version": __version__,
                 "idioms": len(e.corpus), "clusters": len(e.tree["clusters"]),
