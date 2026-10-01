@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>子開 · zikai — 今日成語 idiom oracle</title>
+<style>
+  :root{
+    --paper:#f7f3ea; --ink:#1c1a17; --vermillion:#c3402b; --jade:#2e6e5a;
+    --gold:#b98a2f; --card:#fffdf8; --line:#e4dcc9; --muted:#8b8272;
+    --shadow:0 10px 30px rgba(28,26,23,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:
+    radial-gradient(1200px 400px at 85% -5%, rgba(195,64,43,.06), transparent),
+    radial-gradient(900px 380px at 0% 110%, rgba(46,110,90,.07), transparent),
+    var(--paper);
+    color:var(--ink);
+    font:15px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,"Noto Sans SC","PingFang SC",sans-serif;}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+  header{display:flex;align-items:flex-end;gap:14px;margin-bottom:6px}
+  .seal{width:54px;height:54px;border-radius:10px;background:var(--vermillion);
+    color:#fff7ef;display:grid;place-items:center;font-size:26px;
+    box-shadow:var(--shadow);font-family:"Noto Serif SC",serif}
+  h1{margin:0;font-size:26px;letter-spacing:.5px}
+  h1 small{color:var(--muted);font-weight:400;font-size:13px;display:block;margin-top:2px}
+  .tag{font-size:12px;color:var(--jade);border:1px solid var(--jade);
+    border-radius:999px;padding:2px 10px;margin-left:auto;white-space:nowrap}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);padding:18px;margin-top:18px}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  textarea{flex:1;min-width:260px;min-height:74px;resize:vertical;border:1px solid var(--line);
+    border-radius:10px;padding:10px 12px;font:inherit;background:#fffefb}
+  select,input[type=password],button{border:1px solid var(--line);border-radius:10px;
+    padding:9px 12px;font:inherit;background:#fffefb}
+  button{background:var(--ink);color:var(--paper);cursor:pointer;border:none;font-weight:600}
+  button.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  button:hover{filter:brightness(1.15)}
+  .opts{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap;
+    font-size:13px;color:var(--muted)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .chip{font-size:12px;border:1px dashed var(--gold);color:var(--gold);
+    padding:3px 10px;border-radius:999px;cursor:pointer;background:none}
+  .card-result{display:grid;grid-template-columns:120px 1fr;gap:18px;margin-top:8px}
+  .hanzi-box{display:grid;place-items:center;background:linear-gradient(160deg,#fff 0%,#f9f2e4 100%);
+    border:1px solid var(--line);border-radius:14px;padding:14px;font-size:40px;line-height:1.15;
+    font-family:"Noto Serif SC","PingFang SC",serif;writing-mode:vertical-rl;min-height:150px;color:#3a2d1c}
+  .meaning{font-size:19px;font-weight:600}
+  .pinyin{color:var(--jade);font-style:italic;margin-top:2px}
+  .kv{margin:10px 0 0;display:grid;gap:8px}
+  .kv div{border-left:3px solid var(--vermillion);padding-left:10px}
+  .kv b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:12px}
+  .pill{border-radius:999px;padding:3px 10px;border:1px solid var(--line);background:#fff;color:var(--muted)}
+  .pill.theme{border-color:var(--jade);color:var(--jade)}
+  .pill.conf{border-color:var(--gold);color:var(--gold)}
+  details{margin-top:12px;border-top:1px dashed var(--line);padding-top:8px}
+  summary{cursor:pointer;color:var(--muted);font-size:13px}
+  pre{white-space:pre-wrap;word-break:break-word;background:#171512;color:#f2ead8;
+    border-radius:12px;padding:12px;font-size:12px;overflow:auto;max-height:340px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:8px}
+  .word{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;
+    transition:transform .12s}
+  .word:hover{transform:translateY(-2px);border-color:var(--gold)}
+  .word .h{font-size:20px;font-family:"Noto Serif SC",serif}
+  .word .m{font-size:11px;color:var(--muted);margin-top:3px}
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);
+    color:var(--paper);padding:9px 16px;border-radius:999px;font-size:13px;opacity:0;transition:.25s}
+  .toast.show{opacity:1}
+  footer{color:var(--muted);font-size:12px;margin-top:26px;text-align:center}
+  @media(max-width:640px){.card-result{grid-template-columns:1fr}.hanzi-box{writing-mode:horizontal-tb;min-height:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="seal">開</div>
+    <h1>子開 · zikai
+      <small>學然後知不足 — study, then know the gap. Idiom oracle over chineseidioms.com</small>
+    </h1>
+    <span class="tag" id="stat">…</span>
+  </header>
+
+  <div class="panel">
+    <div class="row">
+      <textarea id="q" placeholder="Describe your situation in plain text — the oracle picks the closest chengyu…"></textarea>
+    </div>
+    <div class="opts">
+      <label>level
+        <select id="level">
+          <option value="full" selected>full</option><option value="compact">compact</option>
+          <option value="text">text</option><option value="slug">slug</option>
+        </select>
+      </label>
+      <label>decider
+        <select id="decider">
+          <option value="">auto</option><option>lexical</option><option>openai</option>
+          <option>anthropic</option><option>openai_compat</option><option>laya</option>
+        </select>
+      </label>
+      <input type="password" id="key" placeholder="API key (optional)" style="width:170px">
+      <button id="go">斷 · Decide</button>
+      <button class="alt" id="rand">抽一句 · Draw</button>
+      <label style="display:flex;align-items:center;gap:4px"><input type="checkbox" id="trace"> trace</label>
+      <label style="display:flex;align-items:center;gap:4px"><input type="checkbox" id="store" checked> remember</label>
+    </div>
+    <div class="chips">
+      <button class="chip" data-try="The team kept guessing without data.">no data, all vibes</button>
+      <button class="chip" data-try="I keep checking the old playbook even though the market changed.">outdated playbook</button>
+      <button class="chip" data-try="He brags in front of the actual experts.">bragging to experts</button>
+      <button class="chip" data-try="Slow and steady progress every single day.">steady progress</button>
+    </div>
+    <div id="result"></div>
+  </div>
+
+  <div class="panel">
+    <b style="font-size:13px">語林 · The grove</b>
+    <div class="row" style="margin-top:8px">
+      <input id="sq" placeholder="search hanzi / pinyin / meaning…" style="flex:1;border:1px solid var(--line);border-radius:10px;padding:9px 12px">
+      <button class="alt" id="sogo">尋 · Search</button>
+    </div>
+    <div class="grid" id="grove"></div>
+  </div>
+
+  <footer>POST /decide · GET /decide?q= · /idioms?q= · /tree · /healthz —
+  depth-capped tree, adapters: openai / anthropic / openai-compatible (laya, sglang, vllm, together, groq, fireworks) / lexical</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const levelMap={'text-ish (full, card view)':'full'};
+const hdr=()=>{const h={'Content-Type':'application/json'};const k=$('key').value||localStorage.zk_key||'';if(k)h['x-api-key']=k;return h;};
+const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600)};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+async function decide(){
+  const text=$('q').value.trim(); if(!text){toast('寫些什麼吧 — type something');return;}
+  $('go').disabled=true;
+  try{
+    const r=await fetch('/decide',{method:'POST',headers:hdr(),body:JSON.stringify({
+      text,level:$('level').value,decider:$('decider').value||undefined,trace:$('trace').checked})});
+    if(r.status===401){toast('key rejected — check the key field');return;}
+    const d=await r.json(); render(d);
+    if($('store').checked){const k=$('key').value; if(k)localStorage.zk_key=k;
+      const h=[...(JSON.parse(localStorage.zk_hist||'[]'))].filter(x=>x.input_digest!==d.input_digest);
+      h.unshift({t:d.id,when:new Date().toISOString(),input:d.decider,text,idiom:d.idiom.hanzi,slug:d.idiom.slug,meaning:d.idiom.meaning});
+      localStorage.zk_hist=JSON.stringify(h.slice(0,20));}
+  }catch(e){toast('network: '+e)}finally{$('go').disabled=false;}
+}
+
+function render(d){
+  const r=d.idiom||{};
+  const ex=r.example_en?`<div><b>Example</b>${esc(r.example_en)}${r.example_zh?' <i style="font-family:Noto Serif SC">'+esc(r.example_zh)+'</i>':''}</div>`:'';
+  $('result').innerHTML=`
+   <div class="card-result" style="margin-top:16px">
+     <div class="hanzi-box">${esc(r.hanzi||'')}</div>
+     <div>
+       <div class="meaning">${esc(r.meaning||'')}</div>
+       <div class="pinyin">${esc(r.pinyin||'')} ${r.literal?'· literally “'+esc(r.literal)+'”':''}</div>
+       <div class="meta-row">
+         <span class="pill theme">${esc(d.theme)}</span>
+         <span class="pill conf">conf ${d.confidence}</span>
+         <span class="pill">${esc(d.decider)} · ${d.latency_ms}ms · depth ${d.depth}</span>
+         <span class="pill">${esc(r.term_code||'')}</span>
+         ${r.url?'<a class="pill" target="_blank" rel="noopener" href="'+esc(r.url)+'">source ↗</a>':''}
+       </div>
+       <div class="kv">${ex}${r.origin?`<div><b>Origin</b>${esc(r.origin).slice(0,600)}</div>`:''}</div>
+       ${d.runner_ups?.length?'<div style="margin-top:10px;font-size:12px;color:#8b8272">near misses: '+d.runner_ups.map(s=>'<a href="#" class="ru" data-s="'+esc(s)+'" style="color:#b98a2f">'+esc(s)+'</a>').join(' · ')+'</div>':''}
+       ${d.trace?'<details open><summary>trace</summary><pre>'+esc(JSON.stringify(d.trace,null,1))+'</pre></details>':''}
+       <details><summary>full JSON · copy</summary><pre>${esc(JSON.stringify(d,null,1))}</pre></details>
+     </div>
+   </div>`;
+  document.querySelectorAll('.ru').forEach(a=>a.onclick=e=>{e.preventDefault();openSlug(a.dataset.s)});
+}
+
+async function openSlug(s){
+  const r=await fetch('/idioms/'+encodeURIComponent(s),{headers:hdr()});
+  if(!r.ok){toast('not found');return}
+  const d=await r.json();
+  render({idiom:{...d.idiom},theme:d.idiom.theme,confidence:'-',decider:'direct',latency_ms:0,depth:0,trace:null,runner_ups:[]});
+}
+
+async function draw(){
+  const r=await fetch('/idioms?q='+(Math.random()>0.5?'a':'e')+'&limit=200',{headers:hdr()});
+  const d=await r.json(); const p=d.results[Math.floor(Math.random()*d.results.length)];
+  $('q').value=p.meaning; decide();
+}
+
+async function search(){
+  const q=$('sq').value.trim(); if(!q){groveRandom();return}
+  const r=await fetch('/idioms?q='+encodeURIComponent(q)+'&limit=24',{headers:hdr()});
+  const d=await r.json(); grove(d.results);
+}
+
+async function groveRandom(){
+  const r=await fetch('/idioms?q=&limit=18').catch(()=>null);
+  let items=[];
+  if(r&&r.ok){const d=await r.json(); items=d.results;}
+  if(!items.length){const t=await (await fetch('/tree')).json();
+    const c=Object.values(t.clusters)[Math.floor(Math.random()*Object.keys(t.clusters).length)];
+    items=await Promise.all(c.idioms.slice(0,12).map(async s=>{
+      const j=await(await fetch('/idioms/'+s,{headers:hdr()})).json(); return j.idiom;}));}
+  grove(items);
+}
+
+function grove(items){
+  $('grove').innerHTML=(items||[]).map(x=>
+    `<div class="word" data-s="${esc(x.slug)}"><div class="h">${esc(x.hanzi)}</div><div class="m">${esc((x.meaning||'').slice(0,48))}</div></div>`).join('');
+  document.querySelectorAll('.word').forEach(w=>w.onclick=()=>openSlug(w.dataset.s));
+}
+
+$('go').onclick=decide; $('rand').onclick=draw; $('sogo').onclick=search;
+$('sq').addEventListener('keydown',e=>{if(e.key==='Enter')search()});
+$('q').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.metaKey||e.ctrlKey))decide()});
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{$('q').value=c.dataset.try;decide()});
+fetch('/healthz').then(r=>r.json()).then(h=>$('stat').textContent=`${h.idioms} 成语 · ${h.clusters} clusters · v${h.version}`);
+groveRandom();
+</script>
+</body>
+</html>

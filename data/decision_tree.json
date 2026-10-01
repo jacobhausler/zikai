@@ -1,0 +1,1780 @@
+{
+ "clusters": {
+  "life-philosophy--c0": {
+   "idioms": [
+    "ai-bu-shi-shou",
+    "bian-hua-wu-chang",
+    "cha-qiang-ren-yi",
+    "che-shui-ma-long",
+    "chu-mu-jing-xin",
+    "fan-yun-fu-yu",
+    "fu-guang-lve-ying",
+    "gong-kui-yi-kui",
+    "gu-xi-yang-jian",
+    "hao-yi-wu-lao",
+    "hui-wei-wu-qiong",
+    "huo-mao-san-zhang",
+    "ji-fei-dan-da",
+    "ji-zhong-nan-fan",
+    "ju-gong-zi-ao",
+    "ju-qi-bu-ding",
+    "kou-mi-fu-jian",
+    "le-ji-sheng-bei",
+    "ming-zhe-bao-shen",
+    "nong-jia-cheng-zhen",
+    "pi-ji-tai-lai",
+    "qian-gong-jin-qi",
+    "shi-yu-yuan-wei",
+    "shu-shou-wu-ce",
+    "tai-shan-ya-ding",
+    "wang-yang-xing-tan",
+    "wei-bu-zu-dao",
+    "wu-ji-bi-fan",
+    "yi-luo-qian-zhang",
+    "yi-shou-zhe-tian",
+    "yi-yan-nan-jin",
+    "ying-jie-bu-xia",
+    "zhi-zu-bu-ru"
+   ],
+   "theme": "Life Philosophy"
+  },
+  "life-philosophy--c1": {
+   "idioms": [
+    "an-ran-wu-yang",
+    "bao-can-shou-que",
+    "bu-lun-bu-lei",
+    "chu-jing-sheng-qing",
+    "chun-wang-chi-han",
+    "dao-xing-ni-shi",
+    "fan-pu-gui-zhen",
+    "fan-tian-fu-di",
+    "feng-tu-ren-qing",
+    "fu-xing-gao-zhao",
+    "gai-xie-gui-zheng",
+    "gen-shen-di-gu",
+    "huang-ru-ge-shi",
+    "jia-ran-er-zhi",
+    "jie-gan-er-qi",
+    "jin-shui-lou-tai",
+    "jing-gong-zhi-niao",
+    "liang-hu-xiang-zheng",
+    "men-ke-luo-que",
+    "min-fu-guo-qiang",
+    "ren-jie-di-ling",
+    "san-yang-kai-tai",
+    "shi-lai-yun-zhuan",
+    "shi-tai-yan-liang",
+    "shi-wai-tao-yuan",
+    "shun-qi-zi-ran",
+    "wang-hu-suo-yi",
+    "yi-yuan-fu-shi"
+   ],
+   "theme": "Life Philosophy"
+  },
+  "life-philosophy--c2": {
+   "idioms": [
+    "an-ru-tai-shan",
+    "bao-jing-cang-sang",
+    "bu-jing-er-zou",
+    "bu-ke-kai-jiao",
+    "bu-tong-bu-yang",
+    "chang-nian-lei-yue",
+    "chen-xin-ru-yi",
+    "chuan-liu-bu-xi",
+    "da-xi-guo-wang",
+    "dan-zhan-xin-jing",
+    "dong-chuang-shi-fa",
+    "fei-qin-zou-shou",
+    "feng-yue-wu-bian",
+    "gao-zhen-wu-you",
+    "gong-bu-ying-qiu",
+    "hua-bing-chong-ji",
+    "huan-de-huan-shi",
+    "jie-ze-er-yu",
+    "jin-shang-tian-hua",
+    "jing-xin-dong-po",
+    "liang-chen-mei-jing",
+    "mang-ren-xia-ma",
+    "mei-yi-yan-nian",
+    "qi-shang-ba-xia",
+    "qian-lv-ji-qiong",
+    "qian-shan-wan-shui",
+    "qiu-gao-qi-shuang",
+    "ren-wu-wan-ren",
+    "ren-xin-bu-gu",
+    "ru-shi-zhong-fu",
+    "ru-zuo-zhen-zhan",
+    "shan-shi-shan-zhong",
+    "shou-zhu-dai-tu",
+    "sui-sui-ping-an",
+    "tan-te-bu-an",
+    "ti-xin-diao-dan",
+    "wu-du-you-ou",
+    "wu-yi-lei-ju",
+    "wu-you-wu-lv",
+    "wu-yuan-wu-gu",
+    "xiang-ti-bing-lun",
+    "xin-cheng-ze-ling",
+    "xin-hui-yi-leng",
+    "xin-kuang-shen-yi",
+    "xin-xiang-shi-cheng",
+    "xin-yuan-yi-ma",
+    "zhi-zui-jin-mi",
+    "zhong-kou-shuo-jin",
+    "zuo-li-bu-an"
+   ],
+   "theme": "Life Philosophy"
+  },
+  "life-philosophy--c3": {
+   "idioms": [
+    "bai-wu-liao-lai",
+    "bu-han-er-li",
+    "bu-lao-er-huo",
+    "bu-wu-zheng-ye",
+    "cang-hai-sang-tian",
+    "cheng-wang-cheng-ba",
+    "chun-feng-man-mian",
+    "duo-ci-yi-ju",
+    "fan-fu-wu-chang",
+    "feng-yun-tu-bian",
+    "fu-wu-shuang-zhi",
+    "hai-kuo-tian-kong",
+    "hao-shi-duo-mo",
+    "jian-ba-nu-zhang",
+    "kou-gan-she-zao",
+    "le-bu-si-shu",
+    "liu-an-hua-ming",
+    "luan-qi-ba-zao",
+    "luo-ye-gui-gen",
+    "mu-bu-xia-ji",
+    "mu-deng-kou-dai",
+    "nian-nian-you-yu",
+    "qian-bian-wan-hua",
+    "ren-shan-ren-hai",
+    "ren-wu-ke-ren",
+    "ri-li-wan-ji",
+    "ruo-you-suo-si",
+    "sheng-ming-lang-ji",
+    "shou-zu-wu-cuo",
+    "tan-hu-se-bian",
+    "tian-fan-di-fu",
+    "tou-liang-huan-zhu",
+    "wan-zi-qian-hong",
+    "wu-jia-zhi-bao",
+    "wu-ke-nai-he",
+    "wu-suo-shi-shi",
+    "xi-chu-wang-wai",
+    "xu-jing-yi-chang",
+    "xuan-ya-qiao-bi",
+    "ya-que-wu-sheng",
+    "yan-gui-zheng-zhuan",
+    "ye-lang-zi-da",
+    "yi-si-bu-gua",
+    "yi-xiang-qing-yuan",
+    "yin-guo-bao-ying",
+    "yin-zhen-zhi-ke",
+    "you-mu-gong-du",
+    "zhi-shang-fu-gui",
+    "zhi-zu-chang-le",
+    "zhuo-jin-jian-zhou",
+    "zi-bao-zi-qi",
+    "zi-bu-liang-li",
+    "zi-shi-qi-guo"
+   ],
+   "theme": "Life Philosophy"
+  },
+  "life-philosophy--c4": {
+   "idioms": [
+    "an-bu-dang-che",
+    "an-ju-le-ye",
+    "bai-ju-guo-xi",
+    "bei-dao-er-chi",
+    "bei-gong-she-ying",
+    "bi-shang-liang-shan",
+    "bie-you-dong-tian",
+    "bing-tian-xue-di",
+    "bu-mao-zhi-di",
+    "chi-ren-shuo-meng",
+    "chun-hui-da-di",
+    "ci-jiu-ying-xin",
+    "diao-chong-xiao-ji",
+    "du-shan-qi-shen",
+    "fan-lao-huan-tong",
+    "feng-he-ri-li",
+    "feng-hua-zheng-mao",
+    "ge-qiang-you-er",
+    "gong-xi-fa-cai",
+    "gu-bu-zi-feng",
+    "hu-bei-xiong-yao",
+    "hua-kai-fu-gui",
+    "huang-liang-yi-meng",
+    "ji-xing-gao-zhao",
+    "jiang-lang-cai-jin",
+    "jing-da-xi-suan",
+    "lao-sheng-chang-tan",
+    "long-fei-feng-wu",
+    "qian-jun-yi-fa",
+    "qian-yi-mo-hua",
+    "sai-weng-shi-ma",
+    "shen-bu-you-ji",
+    "sheng-long-huo-hu",
+    "sheng-yi-xing-long",
+    "shou-bi-nan-shan",
+    "si-hai-sheng-ping",
+    "tian-chang-ri-jiu",
+    "wan-ma-ben-teng",
+    "wan-xiang-geng-xin",
+    "wu-fu-lin-men",
+    "wu-gu-feng-deng",
+    "xi-xi-xiang-guan",
+    "xin-hua-nu-fang",
+    "xing-gao-cai-lie",
+    "yi-rou-ke-gang",
+    "you-sheng-you-se",
+    "zhao-san-mu-si",
+    "zhen-liu-shu-shi",
+    "zhen-shi-shu-liu",
+    "zhi-lu-wei-ma",
+    "zi-you-zi-zai",
+    "zou-ma-guan-hua",
+    "zou-ma-kan-hua"
+   ],
+   "theme": "Life Philosophy"
+  },
+  "life-philosophy--c5": {
+   "idioms": [
+    "cao-mu-jie-bing",
+    "cheng-men-shi-huo",
+    "da-xiang-jing-ting",
+    "da-zhi-ruo-yu",
+    "dai-ruo-mu-ji",
+    "fu-ru-dong-hai",
+    "gu-shou-ru-chai",
+    "jie-wai-sheng-zhi",
+    "jin-jin-you-wei",
+    "le-ci-bu-pi",
+    "liu-liu-da-shun",
+    "qian-li-tiao-tiao",
+    "ru-zui-ru-meng",
+    "si-mian-ba-fang",
+    "tian-hua-luan-zhui",
+    "tian-ma-xing-kong",
+    "tuo-shou-ke-de",
+    "wang-mei-zhi-ke",
+    "wu-bian-wu-ji",
+    "xi-wen-le-jian",
+    "xin-xue-lai-chao",
+    "yang-chang-xiao-dao",
+    "yang-yang-da-guan"
+   ],
+   "theme": "Life Philosophy"
+  },
+  "life-philosophy--c6": {
+   "idioms": [
+    "an-tu-zhong-qian",
+    "bao-luo-wan-xiang",
+    "bu-you-zi-zhu",
+    "bu-zhi-suo-cuo",
+    "cha-chi-nan-fei",
+    "chi-yi-qian-zhang-yi-zhi",
+    "cun-bu-nan-xing",
+    "da-ji-da-li",
+    "di-yang-chu-fan",
+    "du-mu-nan-zhi",
+    "feng-chui-cao-dong",
+    "feng-mi-yi-shi",
+    "feng-tiao-yu-shun",
+    "gao-tan-kuo-lun",
+    "ge-xing-qi-shi",
+    "gu-tu-nan-li",
+    "heng-xing-ba-dao",
+    "hui-ji-ji-yi",
+    "hui-jin-ru-tu",
+    "jian-ren-jian-zhi",
+    "jiao-ta-liang-chuan",
+    "jie-hua-xian-fo",
+    "jin-bi-hui-huang",
+    "jing-ran-you-xu",
+    "kuang-ri-chi-jiu",
+    "lin-yuan-xian-yu",
+    "ming-cun-shi-wang",
+    "pao-tou-lu-mian",
+    "qi-ren-you-tian",
+    "qian-pian-yi-lv",
+    "qiong-tu-mo-lu",
+    "ru-lin-da-di",
+    "ru-lv-bo-bing",
+    "san-shi-er-li",
+    "shi-chen-da-hai",
+    "shui-luo-shi-chu",
+    "si-hai-wei-jia",
+    "tai-ping-sheng-shi",
+    "tan-hua-yi-xian",
+    "tian-jing-di-yi",
+    "tian-xia-wu-nan-shi",
+    "tian-ya-hai-jiao",
+    "wu-di-zi-rong",
+    "xiao-li-cang-dao",
+    "xin-an-li-de",
+    "yi-bo-san-zhe",
+    "yi-lan-wu-yu",
+    "yi-wu-yi-shi",
+    "yi-xue-huai-di",
+    "zhong-shi-zhi-di",
+    "zhong-shuo-fen-yun",
+    "zi-qi-dong-lai",
+    "zuo-you-wei-nan"
+   ],
+   "theme": "Life Philosophy"
+  },
+  "life-philosophy--c7": {
+   "idioms": [
+    "an-fen-shou-ji",
+    "ban-bi-jiang-shan",
+    "bao-shi-zhong-ri",
+    "bu-ji-qi-shu",
+    "cao-zhang-ying-fei",
+    "da-tong-xiao-yi",
+    "dan-bo-ming-zhi",
+    "dang-wu-zhi-ji",
+    "feng-sheng-he-li",
+    "fu-shui-nan-shou",
+    "gai-guo-zi-xin",
+    "gua-shu-di-luo",
+    "hao-gao-wu-yuan",
+    "he-fa-tong-yan",
+    "jin-feng-yu-lu",
+    "jiu-niu-yi-mao",
+    "ke-gu-ming-xin",
+    "kua-kua-qi-tan",
+    "li-suo-dang-ran",
+    "ni-lai-shun-shou",
+    "po-bu-ji-dai",
+    "po-zai-mei-jie",
+    "qi-hu-nan-xia",
+    "qian-suo-wei-you",
+    "ren-jun-bu-jin",
+    "ren-yi-qun-fen",
+    "ri-xin-yue-yi",
+    "shui-xie-bu-tong",
+    "wei-yu-chou-mou",
+    "wu-hua-ba-men",
+    "xiao-kou-chang-kai",
+    "ya-su-gong-shang",
+    "yi-xiang-bu-dao",
+    "yin-huo-de-fu",
+    "yin-huo-shao-shen",
+    "you-sheng-lie-tai",
+    "yu-long-hun-za",
+    "yu-ri-ju-zeng",
+    "zheng-ren-mai-lv",
+    "zhou-er-fu-shi"
+   ],
+   "theme": "Life Philosophy"
+  },
+  "life-philosophy--c8": {
+   "idioms": [
+    "bai-gan-jiao-ji",
+    "bu-yi-er-fei",
+    "cai-yuan-guang-jin",
+    "ceng-chu-bu-qiong",
+    "chui-tou-sang-qi",
+    "da-kuai-ren-xin",
+    "de-yi-wang-xing",
+    "ge-an-guan-huo",
+    "gu-ci-shi-bi",
+    "guo-tai-min-an",
+    "hui-tou-shi-an",
+    "huo-bu-dan-xing",
+    "ji-xiang-ru-yi",
+    "jin-yu-man-tang",
+    "leng-leng-qing-qing",
+    "liao-ruo-chen-xing",
+    "ning-jing-zhi-yuan",
+    "pu-tian-tong-qing",
+    "ru-huo-ru-tu",
+    "si-kong-jian-guan",
+    "si-mian-chu-ge",
+    "sui-yu-er-an",
+    "wan-shi-ru-yi",
+    "wang-yang-de-niu",
+    "xi-qi-yang-yang",
+    "xue-shang-jia-shuang",
+    "yong-ren-zi-rao",
+    "yu-mu-hun-zhu",
+    "zi-can-xing-hui"
+   ],
+   "theme": "Life Philosophy"
+  },
+  "relationships-character--c0": {
+   "idioms": [
+    "ai-mao-fan-qiu",
+    "ai-wu-ji-wu",
+    "ban-mian-zhi-jiao",
+    "po-jing-chong-yuan",
+    "qing-mei-zhu-ma",
+    "shang-xing-xia-xiao",
+    "tong-bing-xiang-lian",
+    "wen-jing-zhi-jiao",
+    "xiang-ru-yi-mo"
+   ],
+   "theme": "Relationships & Character"
+  },
+  "relationships-character--c1": {
+   "idioms": [
+    "ce-mu-er-shi",
+    "chou-mei-ku-lian",
+    "ding-li-mo-bai",
+    "dong-zhang-xi-wang",
+    "gan-chang-cun-duan",
+    "hun-qian-meng-ying",
+    "lian-lian-bu-she",
+    "man-mian-chun-feng",
+    "mei-fei-se-wu",
+    "mei-kai-yan-xiao",
+    "nan-fen-nan-she",
+    "san-gu-mao-lu",
+    "shi-er-bu-jian",
+    "shou-wang-xiang-zhu",
+    "tan-tan-dang-dang",
+    "wang-zi-fei-bo",
+    "wang-zi-zun-da",
+    "xi-xiao-yan-kai",
+    "xin-kou-kai-he",
+    "xin-xiong-kai-kuo",
+    "yi-yi-bu-she",
+    "yi-zhi-qi-shi",
+    "yin-shui-si-yuan",
+    "zhao-si-mu-xiang",
+    "zhong-suo-zhou-zhi"
+   ],
+   "theme": "Relationships & Character"
+  },
+  "relationships-character--c2": {
+   "idioms": [
+    "biao-li-ru-yi",
+    "bu-bei-bu-kang",
+    "bu-xie-yi-gu",
+    "bu-ze-shou-duan",
+    "cheng-ren-zhi-wei",
+    "cu-xin-da-yi",
+    "da-gong-wu-si",
+    "dao-mao-an-ran",
+    "de-cun-jin-chi",
+    "diu-san-la-si",
+    "e-guan-man-ying",
+    "en-jiang-chou-bao",
+    "er-yu-wo-zha",
+    "fu-tang-dao-huo",
+    "gan-nao-tu-di",
+    "gao-feng-liang-jie",
+    "gu-ming-diao-yu",
+    "gu-rou-xiang-lian",
+    "guang-ming-lei-luo",
+    "hai-na-bai-chuan",
+    "he-jia-huan-le",
+    "hu-ju-long-pan",
+    "hu-shuo-ba-dao",
+    "huan-nan-yu-gong",
+    "kai-cheng-bu-gong",
+    "ku-kou-po-xin",
+    "mei-mu-chuan-qing",
+    "mo-mo-wu-wen",
+    "ning-wei-yu-sui",
+    "ping-yi-jin-ren",
+    "qi-zui-ba-she",
+    "qing-tou-yi-he",
+    "shou-zheng-bu-e",
+    "shou-zu-zhi-qing",
+    "tian-chang-di-jiu",
+    "tong-gai-qian-fei",
+    "tong-sou-wu-qi",
+    "wang-en-fu-yi",
+    "wen-zhi-bin-bin",
+    "xi-nu-wu-chang",
+    "xi-shang-mei-shao",
+    "yan-guo-qi-shi",
+    "yan-xing-yi-zhi",
+    "yi-jian-ru-gu",
+    "yi-jian-zhong-qing",
+    "yi-mai-xiang-cheng",
+    "yi-mao-bu-ba",
+    "yi-xin-huan-xin",
+    "yi-yan-jiu-ding",
+    "yu-zhong-xin-chang",
+    "zhan-ding-jie-tie",
+    "zhi-tong-dao-he",
+    "zhong-wang-suo-gui"
+   ],
+   "theme": "Relationships & Character"
+  },
+  "relationships-character--c3": {
+   "idioms": [
+    "ce-yin-zhi-xin",
+    "chi-zi-zhi-xin",
+    "hu-jia-hu-wei",
+    "ming-fu-qi-shi",
+    "nan-xiong-nan-di",
+    "nu-bu-ke-e",
+    "qing-gai-ru-gu",
+    "wu-dong-yu-zhong",
+    "wu-ti-tou-di",
+    "xin-ping-qi-he",
+    "xin-zhi-kou-kuai",
+    "xing-ying-bu-li",
+    "xu-zhang-sheng-shi",
+    "ye-gong-hao-long",
+    "zhi-sang-ma-huai"
+   ],
+   "theme": "Relationships & Character"
+  },
+  "relationships-character--c4": {
+   "idioms": [
+    "de-cai-jian-bei",
+    "gong-er-wang-si",
+    "guo-he-chai-qiao",
+    "ji-gong-jin-li",
+    "jing-ye-le-qun",
+    "ju-gong-jin-cui",
+    "mo-ni-zhi-jiao",
+    "mu-zhong-wu-ren",
+    "qing-guo-qing-cheng",
+    "ren-jin-qi-cai",
+    "wen-xin-wu-kui",
+    "xiang-jian-hen-wan",
+    "xin-gan-qing-yuan",
+    "yi-mao-qu-ren",
+    "yi-ru-ji-wang",
+    "yi-shen-zuo-ze"
+   ],
+   "theme": "Relationships & Character"
+  },
+  "relationships-character--c5": {
+   "idioms": [
+    "bian-ben-jia-li",
+    "bu-yuan-qian-li",
+    "jian-yi-yong-wei",
+    "sun-ren-li-ji",
+    "yi-nuo-qian-jin",
+    "zhao-qin-mu-chu",
+    "zheng-ren-jun-zi",
+    "zi-gao-fen-yong",
+    "zi-yi-wei-shi"
+   ],
+   "theme": "Relationships & Character"
+  },
+  "relationships-character--c6": {
+   "idioms": [
+    "bai-tou-xie-lao",
+    "chun-feng-hua-yu",
+    "da-jing-xiao-guai",
+    "dai-ren-re-qing",
+    "de-gao-wang-zhong",
+    "fu-jing-qing-zui",
+    "hai-ku-shi-lan",
+    "hu-li-wei-ba",
+    "luo-jing-xia-shi",
+    "luo-luo-da-fang",
+    "qiu-hao-wu-fan",
+    "she-ji-wei-ren",
+    "shou-yang-bo-shi",
+    "tian-lun-zhi-le",
+    "wu-wei-bu-zhi",
+    "xin-di-shan-liang",
+    "xue-zhong-song-tan",
+    "yi-chen-bu-ran",
+    "yi-fan-qian-jin",
+    "yi-mu-yi-yang",
+    "yi-shi-tong-ren",
+    "you-kou-jie-bei",
+    "zhong-zhi-cheng-cheng"
+   ],
+   "theme": "Relationships & Character"
+  },
+  "relationships-character--c7": {
+   "idioms": [
+    "bu-yan-er-yu",
+    "chen-mo-gua-yan",
+    "chun-chi-xiang-yi",
+    "da-yi-mie-qin",
+    "fei-e-pu-huo",
+    "gan-dan-xiang-zhao",
+    "gao-shan-liu-shui",
+    "guai-wan-mo-jiao",
+    "hao-hao-xian-sheng",
+    "hua-hao-yue-yuan",
+    "jiang-xin-bi-xin",
+    "kou-shi-xin-fei",
+    "lao-dang-yi-zhuang",
+    "liang-lei-cha-dao",
+    "long-feng-cheng-xiang",
+    "men-dang-hu-dui",
+    "tao-tao-bu-jue",
+    "tui-xin-zhi-fu",
+    "wan-bi-gui-zhao",
+    "wei-li-shi-tu",
+    "xiang-jing-ru-bin",
+    "xin-xin-xiang-yin",
+    "xin-zhao-bu-xuan",
+    "yan-bu-you-zhong",
+    "yan-er-you-xin",
+    "yang-xu-xuan-yu",
+    "yang-zhi-hu-pi",
+    "yi-yan-ji-chu",
+    "zhi-gao-qi-yang",
+    "zuo-huai-bu-luan"
+   ],
+   "theme": "Relationships & Character"
+  },
+  "relationships-character--c8": {
+   "idioms": [
+    "bing-qing-yu-jie",
+    "chang-hua-duan-shuo",
+    "feng-yu-tong-zhou",
+    "ge-shu-ji-jian",
+    "gua-yang-tou-mai-gou-rou",
+    "hai-qun-zhi-ma",
+    "hui-mo-ru-shen",
+    "ju-an-qi-mei",
+    "le-yu-zhu-ren",
+    "ming-zhi-gu-fan",
+    "qian-yang-dan-jiu",
+    "qing-tong-shou-zu",
+    "ruo-wu-qi-shi",
+    "shou-kou-ru-ping",
+    "su-wu-mu-yang",
+    "tong-zhou-gong-ji",
+    "wang-chuan-qiu-shui",
+    "wu-jin-qi-yong",
+    "yi-he-wei-gui",
+    "yu-zhong-bu-tong",
+    "zheng-lun-bu-xiu",
+    "zi-zuo-cong-ming",
+    "zong-er-yan-zhi",
+    "zun-lao-ai-you"
+   ],
+   "theme": "Relationships & Character"
+  },
+  "strategy-action--c0": {
+   "idioms": [
+    "an-bu-jiu-ban",
+    "jin-nang-miao-ji",
+    "shi-ru-po-zhu",
+    "shi-yang-jiu-mu",
+    "xiong-you-cheng-zhu",
+    "ying-ren-er-jie"
+   ],
+   "theme": "Strategy & Action"
+  },
+  "strategy-action--c1": {
+   "idioms": [
+    "bing-bu-yan-zha",
+    "chang-xiu-shan-wu",
+    "cheng-feng-po-lang",
+    "gong-qi-bu-bei",
+    "jin-ge-tie-ma",
+    "li-bing-mo-ma",
+    "luo-hua-liu-shui",
+    "qin-zei-qin-wang",
+    "sheng-dong-ji-xi",
+    "shun-shou-qian-yang",
+    "xian-fa-zhi-ren",
+    "yi-lao-yong-yi",
+    "yi-luan-ji-shi",
+    "yu-hu-mou-pi",
+    "zhen-ge-dai-dan",
+    "zheng-fen-duo-miao",
+    "zong-heng-bai-he"
+   ],
+   "theme": "Strategy & Action"
+  },
+  "strategy-action--c2": {
+   "idioms": [
+    "bu-yue-er-tong",
+    "da-dao-kuo-fu",
+    "dang-ji-li-duan",
+    "fu-di-chou-xin",
+    "hou-fa-zhi-ren",
+    "ling-pi-xi-jing",
+    "sha-yi-jing-bai",
+    "shi-zai-bi-xing",
+    "sui-ji-ying-bian",
+    "tang-bi-dang-che",
+    "tou-shu-ji-qi",
+    "wan-wu-yi-shi",
+    "yi-yi-dai-lao",
+    "zhen-feng-xiang-dui",
+    "zhi-dao-huang-long"
+   ],
+   "theme": "Strategy & Action"
+  },
+  "strategy-action--c3": {
+   "idioms": [
+    "an-tu-suo-ji",
+    "bei-shui-yi-zhan",
+    "bi-shi-jiu-xu",
+    "bu-bu-wei-ying",
+    "bu-gong-zi-po",
+    "chu-qi-zhi-sheng",
+    "fan-ke-wei-zhu",
+    "hou-gu-zhi-you",
+    "hu-ru-yang-qun",
+    "jiang-ji-jiu-ji",
+    "jin-chan-tuo-qiao",
+    "li-ying-wai-he",
+    "pang-qiao-ce-ji",
+    "shen-xian-shi-zu",
+    "shi-bu-ke-dang",
+    "shu-shang-kai-hua",
+    "sun-bing-zhe-jiang",
+    "tang-lang-bu-chan",
+    "tong-qiang-tie-bi",
+    "tui-bi-san-she",
+    "wen-zha-wen-da",
+    "yang-chang-bi-duan",
+    "yang-ru-hu-kou",
+    "zou-wei-shang-ji"
+   ],
+   "theme": "Strategy & Action"
+  },
+  "strategy-action--c4": {
+   "idioms": [
+    "gu-zhu-yi-zhi",
+    "guan-men-zhuo-zei",
+    "hun-shui-mo-yu",
+    "ju-an-si-wei",
+    "man-tian-guo-hai",
+    "mi-bu-tou-feng",
+    "qu-yang-gong-hu",
+    "san-ling-wu-shen",
+    "tian-luo-di-wang",
+    "yu-bang-xiang-zheng",
+    "yuan-jiao-jin-gong",
+    "zuo-shou-yu-li"
+   ],
+   "theme": "Strategy & Action"
+  },
+  "strategy-action--c5": {
+   "idioms": [
+    "an-du-chen-cang",
+    "bi-qi-rui-qi",
+    "chang-kong-cheng-ji",
+    "chen-huo-da-jie",
+    "cheng-shang-qi-xia",
+    "cheng-xia-zhi-meng",
+    "da-cao-jing-she",
+    "huo-zhong-qu-li",
+    "jia-dao-fa-guo",
+    "kong-cheng-ji",
+    "ku-rou-ji",
+    "li-dai-tao-jiang",
+    "lian-huan-ji",
+    "si-tong-ba-da",
+    "tui-bo-zhu-lan",
+    "wei-er-bu-gong",
+    "wei-wei-jiu-zhao",
+    "wu-zhong-sheng-you",
+    "yi-tui-wei-jin",
+    "yi-wang-da-jin",
+    "yu-qin-gu-zong",
+    "zhi-ji-zhi-bi"
+   ],
+   "theme": "Strategy & Action"
+  },
+  "strategy-action--c6": {
+   "idioms": [
+    "an-jian-shang-ren",
+    "bai-nian-da-ji",
+    "diao-hu-li-shan",
+    "fang-hu-gui-shan",
+    "jie-dao-sha-ren",
+    "qi-shou-ba-jiao",
+    "sha-ji-qu-luan",
+    "tie-zheng-ru-shan",
+    "xiao-xin-yi-yi",
+    "yi-jian-shuang-diao",
+    "yi-ju-liang-de",
+    "yuan-mu-qiu-yu"
+   ],
+   "theme": "Strategy & Action"
+  },
+  "success-perseverance--c0": {
+   "idioms": [
+    "ang-shou-ting-xiong",
+    "bi-yue-xiu-hua",
+    "du-ju-jiang-xin",
+    "ge-de-qi-suo",
+    "ge-xian-shen-tong",
+    "ji-liu-yong-jin",
+    "ju-shi-zhu-mu",
+    "kua-fu-zhu-ri",
+    "pi-jing-zhan-ji",
+    "po-fu-chen-zhou",
+    "yong-guan-san-jun",
+    "you-zhi-zhe-shi-jing-cheng",
+    "zhao-cai-jin-bao",
+    "zhi-nan-er-jin",
+    "zhi-zai-si-fang"
+   ],
+   "theme": "Success & Perseverance"
+  },
+  "success-perseverance--c1": {
+   "idioms": [
+    "bai-chi-gan-tou",
+    "bai-li-tiao-yi",
+    "bai-zhe-bu-nao",
+    "dan-qiang-pi-ma",
+    "dong-shan-zai-qi",
+    "fu-yao-zhi-shang",
+    "hu-feng-huan-yu",
+    "lu-huo-chun-qing",
+    "ma-bu-ting-ti",
+    "ping-bu-qing-yun",
+    "qing-yun-zhi-shang",
+    "ren-zhong-dao-yuan",
+    "shu-neng-sheng-qiao",
+    "shui-dao-qu-cheng",
+    "suo-xiang-wu-di",
+    "you-bei-wu-huan",
+    "yu-hou-chun-sun"
+   ],
+   "theme": "Success & Perseverance"
+  },
+  "success-perseverance--c2": {
+   "idioms": [
+    "bu-bu-gao-sheng",
+    "chi-zhi-yi-heng",
+    "chu-lei-ba-cui",
+    "chun-can-dao-si",
+    "da-xian-shen-shou",
+    "de-tian-du-hou",
+    "feng-yu-wu-zu",
+    "gai-tian-huan-di",
+    "han-xin-ru-ku",
+    "jiao-ta-shi-di",
+    "ju-jing-hui-shen",
+    "kai-tian-pi-di",
+    "miao-shou-hui-chun",
+    "mu-bu-zhuan-jing",
+    "pi-gan-li-dan",
+    "quan-li-yi-fu",
+    "ren-ru-fu-zhong",
+    "ri-ji-yue-lei",
+    "ru-yu-de-shui",
+    "wen-ji-qi-wu",
+    "xiong-huai-da-zhi",
+    "zao-bi-tou-guang"
+   ],
+   "theme": "Success & Perseverance"
+  },
+  "success-perseverance--c3": {
+   "idioms": [
+    "bo-yun-jian-ri",
+    "bu-qu-bu-nao",
+    "du-dang-yi-mian",
+    "feng-mao-lin-jiao",
+    "luo-yang-zhi-gui",
+    "ren-ding-sheng-tian",
+    "tai-ran-zi-ruo",
+    "tian-dao-chou-qin",
+    "xin-shou-nian-lai",
+    "zhi-zhi-du-wai",
+    "zi-qiang-bu-xi"
+   ],
+   "theme": "Success & Perseverance"
+  },
+  "success-perseverance--c4": {
+   "idioms": [
+    "ban-tu-er-fei",
+    "da-zhan-hong-tu",
+    "fei-huang-teng-da",
+    "kuai-ma-jia-bian",
+    "long-teng-hu-yue",
+    "ou-xin-li-xue",
+    "peng-cheng-wan-li",
+    "qian-che-zhi-jian",
+    "tu-si-gou-peng",
+    "yi-wang-wu-qian",
+    "yong-wang-zhi-qian",
+    "yu-gong-yi-shan",
+    "zai-jie-zai-li"
+   ],
+   "theme": "Success & Perseverance"
+  },
+  "success-perseverance--c5": {
+   "idioms": [
+    "ben-niao-xian-fei",
+    "bing-xiao-wa-jie",
+    "bu-ci-xin-lao",
+    "chu-ren-tou-di",
+    "chu-shen-ru-hua",
+    "da-qi-wan-cheng",
+    "dan-da-xin-xi",
+    "deng-tang-ru-shi",
+    "ding-li-xiang-zhu",
+    "fan-shan-yue-ling",
+    "fei-qin-wang-shi",
+    "fen-fa-tu-qiang",
+    "feng-can-lu-su",
+    "feng-gong-wei-ji",
+    "gong-cheng-ming-jiu",
+    "gong-de-yuan-man",
+    "gua-gu-liao-du",
+    "guang-zong-yao-zu",
+    "hao-hao-dang-dang",
+    "hou-lai-ju-shang",
+    "hu-tou-she-wei",
+    "jing-tian-dong-di",
+    "jing-yi-qiu-jing",
+    "ju-sha-cheng-ta",
+    "ju-shi-wen-ming",
+    "ku-jin-gan-lai",
+    "lao-ku-gong-gao",
+    "li-jing-tu-zhi",
+    "lin-wei-bu-ju",
+    "liu-fang-bai-shi",
+    "men-ting-ruo-shi",
+    "ming-chui-qing-shi",
+    "ming-li-shuang-shou",
+    "ni-shui-xing-zhou",
+    "pi-xing-dai-yue",
+    "qian-chui-bai-lian",
+    "qian-tu-wu-liang",
+    "qie-er-bu-she",
+    "qing-er-yi-ju",
+    "ren-cai-bei-chu",
+    "sheng-ju-mu-duan",
+    "shui-di-shi-chuan",
+    "tong-xiao-da-dan",
+    "wang-qi-xiang-bei",
+    "wo-xin-chang-dan",
+    "wu-xie-ke-ji",
+    "wu-yu-lun-bi",
+    "yi-fan-feng-shun",
+    "yi-hu-bai-ying",
+    "yi-si-bu-gou",
+    "ying-nan-er-shang",
+    "you-shi-you-zhong",
+    "you-tiao-bu-wen",
+    "you-tou-wu-wei",
+    "yu-ru-yu-cheng",
+    "zi-zi-bu-juan"
+   ],
+   "theme": "Success & Perseverance"
+  },
+  "success-perseverance--c6": {
+   "idioms": [
+    "ba-shan-she-shui",
+    "bai-zhan-bai-sheng",
+    "di-shui-bu-lou",
+    "du-zhan-ao-tou",
+    "fu-zhong-qian-xing",
+    "gong-wu-bu-ke",
+    "he-li-ji-qun",
+    "ming-lie-qian-mao",
+    "mu-wu-quan-niu",
+    "po-tian-huang",
+    "qi-kai-de-sheng",
+    "qing-chu-yu-lan",
+    "rao-liang-san-ri",
+    "suo-xiang-pi-mi",
+    "tie-chu-cheng-zhen",
+    "tuo-ying-er-chu",
+    "xin-xin-xiang-rong",
+    "yi-gu-zuo-qi",
+    "yun-chou-wei-wo",
+    "zhao-qi-peng-bo",
+    "zhi-nan-er-tui"
+   ],
+   "theme": "Success & Perseverance"
+  },
+  "success-perseverance--c7": {
+   "idioms": [
+    "bai-fa-bai-zhong",
+    "bai-shou-qi-jia",
+    "bie-ju-yi-ge",
+    "du-shu-yi-zhi",
+    "du-yi-wu-er",
+    "fen-bu-gu-shen",
+    "gu-ruo-jin-tang",
+    "hai-di-lao-zhen",
+    "hong-hu-zhi-zhi",
+    "hou-ji-bo-fa",
+    "ji-ye-cheng-qiu",
+    "jiang-xin-du-yun",
+    "jing-wei-tian-hai",
+    "mao-sui-zi-jian",
+    "qian-cheng-si-jin",
+    "ru-hu-tian-yi",
+    "sheng-quan-zai-wo",
+    "shou-qu-yi-zhi",
+    "shou-shi-ru-jin",
+    "tian-yi-wu-feng",
+    "wen-bu-jia-dian",
+    "wen-cao-sheng-quan",
+    "xiong-you-qiu-he",
+    "xuan-liang-ci-gu",
+    "yi-qi-he-cheng",
+    "zhan-wu-bu-sheng",
+    "zheng-xian-kong-hou",
+    "zuo-you-feng-yuan"
+   ],
+   "theme": "Success & Perseverance"
+  },
+  "success-perseverance--c8": {
+   "idioms": [
+    "deng-feng-zao-ji",
+    "dong-feng-hua-yu",
+    "feng-yun-ji-hui",
+    "fu-zhong-zhi-yuan",
+    "ji-shao-cheng-duo",
+    "jian-chi-bu-xie",
+    "ju-zhong-ruo-qing",
+    "li-wan-kuang-lan",
+    "long-ma-jing-shen",
+    "ma-dao-cheng-gong",
+    "ma-dao-gong-cheng",
+    "man-zai-er-gui",
+    "qiao-duo-tian-gong",
+    "shi-ban-gong-bei",
+    "si-er-hou-yi",
+    "yi-ma-dang-xian",
+    "yi-ming-jing-ren",
+    "yi-xin-yi-yi",
+    "zi-li-geng-sheng"
+   ],
+   "theme": "Success & Perseverance"
+  },
+  "wisdom-learning--c0": {
+   "idioms": [
+    "ai-li-cun-yang",
+    "kai-juan-you-yi",
+    "ke-zhou-qiu-jian"
+   ],
+   "theme": "Wisdom & Learning"
+  },
+  "wisdom-learning--c1": {
+   "idioms": [
+    "bu-chi-xia-wen",
+    "guo-you-bu-ji",
+    "hua-di-wei-lao",
+    "jian-xian-si-qi",
+    "ma-ma-hu-hu",
+    "nan-yuan-bei-zhe",
+    "pao-zhuan-yin-yu",
+    "qu-gao-he-gua",
+    "wo-hu-cang-long",
+    "wu-shi-zi-tong",
+    "xian-jian-zhi-ming",
+    "yang-chun-bai-xue",
+    "zhi-shang-tan-bing"
+   ],
+   "theme": "Wisdom & Learning"
+  },
+  "wisdom-learning--c2": {
+   "idioms": [
+    "du-wan-juan-shu",
+    "dui-zheng-xia-yao",
+    "er-cong-mu-ming",
+    "han-niu-chong-dong",
+    "hou-sheng-ke-wei",
+    "hu-lun-tun-zao",
+    "huo-ran-kai-lang",
+    "ji-liu-yong-tui",
+    "ji-xiang-zhi-zhi",
+    "jian-hao-jiu-shou",
+    "ming-jing-zhi-shui",
+    "nang-ying-ying-xue",
+    "shi-ke-er-zhi",
+    "shou-bu-shi-juan",
+    "wei-bu-xian-zhi",
+    "wen-guo-ze-xi",
+    "xu-xu-ru-sheng",
+    "xue-fu-wu-che",
+    "yi-ye-zhi-qiu"
+   ],
+   "theme": "Wisdom & Learning"
+  },
+  "wisdom-learning--c3": {
+   "idioms": [
+    "bai-si-bu-jie",
+    "ban-jin-ba-liang",
+    "bi-men-zao-che",
+    "bu-ju-yi-ge",
+    "bu-ke-jiu-yao",
+    "bu-ke-si-yi",
+    "chen-yu-luo-yan",
+    "chu-cai-jin-yong",
+    "cong-shan-ru-liu",
+    "dong-ruo-guan-huo",
+    "duan-zhang-qu-yi",
+    "dui-niu-tan-qin",
+    "ge-you-suo-chang",
+    "gua-tian-li-xia",
+    "hua-zhong-you-shi",
+    "jia-qing-jiu-shu",
+    "jiao-tu-san-ku",
+    "ming-cha-qiu-hao",
+    "qia-dao-hao-chu",
+    "qia-ru-qi-fen",
+    "qu-tu-xi-xin",
+    "ru-shu-jia-zhen",
+    "san-si-er-xing",
+    "shen-si-shu-lv",
+    "shi-shi-qiu-shi",
+    "shi-you-ba-jiu",
+    "shu-shi-wu-du",
+    "si-ma-nan-zhui",
+    "wang-yang-bu-lao",
+    "wei-bian-san-jue",
+    "yi-zhen-jian-xie",
+    "zuo-si-you-xiang"
+   ],
+   "theme": "Wisdom & Learning"
+  },
+  "wisdom-learning--c4": {
+   "idioms": [
+    "bao-xin-jiu-huo",
+    "bo-wen-qiang-ji",
+    "bu-qiu-shen-jie",
+    "cha-yan-guan-se",
+    "cheng-men-li-xue",
+    "ge-wu-zhi-zhi",
+    "gua-mu-xiang-kan",
+    "lan-yu-chong-shu",
+    "meng-mu-san-qian",
+    "pang-zheng-bo-yin",
+    "ru-mu-san-fen",
+    "san-xing-wu-shen",
+    "shen-mou-yuan-lv",
+    "xiang-fu-xiang-cheng",
+    "yi-yang-yi-niu",
+    "yin-di-zhi-yi"
+   ],
+   "theme": "Wisdom & Learning"
+  },
+  "wisdom-learning--c5": {
+   "idioms": [
+    "ben-mo-dao-zhi",
+    "bu-feng-zhuo-ying",
+    "bu-xiang-shang-xia",
+    "cai-gao-ba-dou",
+    "cheng-qian-qi-hou",
+    "cheng-zhu-zai-xiong",
+    "da-cai-xiao-yong",
+    "dang-ju-zhe-mi",
+    "de-xin-ying-shou",
+    "dong-shi-xiao-pin",
+    "fang-wei-du-jian",
+    "ge-xue-sao-yang",
+    "guan-kui-li-ce",
+    "hao-wu-yi-wen",
+    "hua-long-dian-jing",
+    "hui-ren-bu-juan",
+    "lai-long-qu-mai",
+    "ling-yang-gua-jiao",
+    "man-fu-jing-lun",
+    "ming-qiang-yi-duo",
+    "pi-sha-jian-jin",
+    "shun-teng-mo-gua",
+    "xun-xu-jian-jin",
+    "yi-zi-qian-jin",
+    "yin-cai-shi-jiao",
+    "zhui-ben-su-yuan"
+   ],
+   "theme": "Wisdom & Learning"
+  },
+  "wisdom-learning--c6": {
+   "idioms": [
+    "ba-miao-zhu-zhang",
+    "ban-xin-ban-yi",
+    "dao-ting-tu-shuo",
+    "de-bu-chang-shi",
+    "diao-yi-qing-xin",
+    "fang-huan-wei-ran",
+    "jin-yu-liang-yan",
+    "jing-diao-xi-ke",
+    "mang-ren-mo-xiang",
+    "mian-mian-ju-dao",
+    "mo-ming-qi-miao",
+    "qi-lu-wang-yang",
+    "qing-che-shu-lu",
+    "san-ren-cheng-hu",
+    "xu-huai-ruo-gu",
+    "xue-hai-wu-ya",
+    "xue-zu-shi-lv",
+    "ya-miao-zhu-zhang",
+    "yan-chuan-shen-jiao",
+    "yi-qiao-bu-tong",
+    "yi-shi-er-niao",
+    "yi-ye-zhang-mu",
+    "you-ren-you-yu",
+    "zuo-jing-guan-tian"
+   ],
+   "theme": "Wisdom & Learning"
+  },
+  "wisdom-learning--c7": {
+   "idioms": [
+    "bo-xue-duo-cai",
+    "cai-shu-xue-qian",
+    "chu-kou-cheng-zhang",
+    "gui-fu-shen-gong",
+    "hua-she-tian-zu",
+    "jing-di-zhi-wa",
+    "ju-yi-fan-san",
+    "kou-ruo-xuan-he",
+    "liang-quan-qi-mei",
+    "mai-du-huan-zhu",
+    "rong-hui-guan-tong",
+    "shen-ru-qian-chu",
+    "tao-li-man-men",
+    "tian-wai-you-tian",
+    "xun-xun-shan-you",
+    "yan-er-dao-ling",
+    "yan-gao-shou-di",
+    "yi-mu-liao-ran",
+    "yi-zun-jiu-jiao",
+    "you-jiao-wu-lei",
+    "zi-xiang-mao-dun"
+   ],
+   "theme": "Wisdom & Learning"
+  },
+  "wisdom-learning--c8": {
+   "idioms": [
+    "ban-men-nong-fu",
+    "bian-pi-ru-li",
+    "bie-chu-xin-cai",
+    "bo-gu-tong-jin",
+    "chu-lei-pang-tong",
+    "dian-shi-cheng-jin",
+    "er-mu-yi-xin",
+    "er-ru-mu-ran",
+    "gao-zhan-yuan-zhu",
+    "gong-cheng-shen-tui",
+    "gui-gen-dao-di",
+    "han-dan-xue-bu",
+    "huang-ran-da-wu",
+    "ji-si-guang-yi",
+    "ji-yu-qiu-cheng",
+    "jian-duo-shi-guang",
+    "jian-shou-bing-xu",
+    "jian-wei-zhi-zhu",
+    "kai-men-jian-shan",
+    "lao-ma-shi-tu",
+    "miao-bi-sheng-hua",
+    "miao-yu-lian-zhu",
+    "nong-qiao-cheng-zhuo",
+    "pang-guan-zhe-qing",
+    "pao-ding-jie-niu",
+    "qiu-tong-cun-yi",
+    "qu-chang-bu-duan",
+    "ru-xiang-sui-su",
+    "shen-lin-qi-jing",
+    "shi-nian-han-chuang",
+    "tou-tou-shi-dao",
+    "tui-chen-chu-xin",
+    "wen-gu-zhi-xin",
+    "wu-suo-bu-zhi",
+    "xian-ru-wei-zhu",
+    "xian-zhi-xian-jue",
+    "xuan-ya-le-ma",
+    "xue-yi-zhi-yong",
+    "yi-qu-tong-gong",
+    "yu-su-bu-da",
+    "yuan-yuan-liu-chang",
+    "zhi-xing-he-yi",
+    "zi-zi-zhu-ji"
+   ],
+   "theme": "Wisdom & Learning"
+  }
+ },
+ "max_depth": 2,
+ "root": {
+  "id": "q0.theme",
+  "kind": "question",
+  "options": [
+   {
+    "cluster_options": [
+     {
+      "exemplars": [
+       "ai-bu-shi-shou",
+       "cha-qiang-ren-yi"
+      ],
+      "hint": "Cherish something too much to put it down; Broadly satisfactory, better than feared",
+      "label": "rather, standard, turn",
+      "value": "life-philosophy--c0"
+     },
+     {
+      "exemplars": [
+       "chu-jing-sheng-qing",
+       "yi-yuan-fu-shi"
+      ],
+      "hint": "Moved by the sight of something familiar; A new year begins and everything starts afresh",
+      "label": "com, first, return",
+      "value": "life-philosophy--c1"
+     },
+     {
+      "exemplars": [
+       "liang-chen-mei-jing",
+       "tan-te-bu-an"
+      ],
+      "hint": "A fine occasion and lovely scenery; Feel anxious and uneasy",
+      "label": "rather, thing, heart",
+      "value": "life-philosophy--c2"
+     },
+     {
+      "exemplars": [
+       "ruo-you-suo-si",
+       "cheng-wang-cheng-ba"
+      ],
+      "hint": "Lost in thought with a contemplative expression; Domineering behavior",
+      "label": "use, describ, rather",
+      "value": "life-philosophy--c3"
+     },
+     {
+      "exemplars": [
+       "an-bu-dang-che",
+       "sheng-long-huo-hu"
+      ],
+      "hint": "Choose simpler pleasures over status displays; Full of energy",
+      "label": "mean, but, rather",
+      "value": "life-philosophy--c4"
+     },
+     {
+      "exemplars": [
+       "jin-jin-you-wei",
+       "cao-mu-jie-bing"
+      ],
+      "hint": "With great interest and enjoyment; Extreme paranoia sees threats everywhere",
+      "label": "great, describ, far",
+      "value": "life-philosophy--c5"
+     },
+     {
+      "exemplars": [
+       "cha-chi-nan-fei",
+       "ge-xing-qi-shi"
+      ],
+      "hint": "Utterly impossible to escape; Disunity in action",
+      "label": "but, describ, rather",
+      "value": "life-philosophy--c6"
+     },
+     {
+      "exemplars": [
+       "po-bu-ji-dai",
+       "bao-shi-zhong-ri"
+      ],
+      "hint": "Can't wait; eager; Idle and unproductive",
+      "label": "rather, carry, describ",
+      "value": "life-philosophy--c7"
+     },
+     {
+      "exemplars": [
+       "bai-gan-jiao-ji",
+       "cai-yuan-guang-jin"
+      ],
+      "hint": "Complex emotions; May money come to you from every direction",
+      "label": "new, but, once",
+      "value": "life-philosophy--c8"
+     }
+    ],
+    "cluster_question": "Within “Life Philosophy”, which situation is closest to the input?",
+    "clusters_ref": [
+     "life-philosophy--c0",
+     "life-philosophy--c1",
+     "life-philosophy--c2",
+     "life-philosophy--c3",
+     "life-philosophy--c4",
+     "life-philosophy--c5",
+     "life-philosophy--c6",
+     "life-philosophy--c7",
+     "life-philosophy--c8"
+    ],
+    "hint": "361 idioms",
+    "label": "Life Philosophy",
+    "value": "life-philosophy"
+   },
+   {
+    "cluster_options": [
+     {
+      "exemplars": [
+       "ban-mian-zhi-jiao",
+       "tong-bing-xiang-lian"
+      ],
+      "hint": "Superficial acquaintance without depth; Sympathize with those sharing similar troubles",
+      "label": "man, another, him",
+      "value": "relationships-character--c0"
+     },
+     {
+      "exemplars": [
+       "chou-mei-ku-lian",
+       "man-mian-chun-feng"
+      ],
+      "hint": "Look worried and unhappy; Radiant happiness",
+      "label": "rather, somebody, look",
+      "value": "relationships-character--c1"
+     },
+     {
+      "exemplars": [
+       "biao-li-ru-yi",
+       "hu-ju-long-pan"
+      ],
+      "hint": "Be consistent inside and out; Commanding imposing strategic position",
+      "label": "rather, but, describ",
+      "value": "relationships-character--c2"
+     },
+     {
+      "exemplars": [
+       "wu-dong-yu-zhong",
+       "wu-ti-tou-di"
+      ],
+      "hint": "Unmoved; indifferent; Extreme admiration",
+      "label": "use, cannot, describ",
+      "value": "relationships-character--c3"
+     },
+     {
+      "exemplars": [
+       "guo-he-chai-qiao",
+       "ji-gong-jin-li"
+      ],
+      "hint": "Abandoning those who helped you; Seek quick success and immediate benefit",
+      "label": "against, but, record",
+      "value": "relationships-character--c4"
+     },
+     {
+      "exemplars": [
+       "zi-gao-fen-yong",
+       "zheng-ren-jun-zi"
+      ],
+      "hint": "Volunteer bravely; step forward willingly; Ostentatiously virtuous — now usually sarcastic",
+      "label": "mean, treat, ask",
+      "value": "relationships-character--c5"
+     },
+     {
+      "exemplars": [
+       "luo-jing-xia-shi",
+       "hai-ku-shi-lan"
+      ],
+      "hint": "Attack someone who is already down; Until the end of time; eternal love",
+      "label": "rather, how, form",
+      "value": "relationships-character--c6"
+     },
+     {
+      "exemplars": [
+       "hao-hao-xian-sheng",
+       "yan-bu-you-zhong"
+      ],
+      "hint": "Person who agrees with everyone to avoid conflict; Speak without meaning it",
+      "label": "word, said, speak",
+      "value": "relationships-character--c7"
+     },
+     {
+      "exemplars": [
+       "ming-zhi-gu-fan",
+       "qing-tong-shou-zu"
+      ],
+      "hint": "Knowingly commit a violation; Sibling-like bond",
+      "label": "thi, same, nam",
+      "value": "relationships-character--c8"
+     }
+    ],
+    "cluster_question": "Within “Relationships & Character”, which situation is closest to the input?",
+    "clusters_ref": [
+     "relationships-character--c0",
+     "relationships-character--c1",
+     "relationships-character--c2",
+     "relationships-character--c3",
+     "relationships-character--c4",
+     "relationships-character--c5",
+     "relationships-character--c6",
+     "relationships-character--c7",
+     "relationships-character--c8"
+    ],
+    "hint": "204 idioms",
+    "label": "Relationships & Character",
+    "value": "relationships-character"
+   },
+   {
+    "cluster_options": [
+     {
+      "exemplars": [
+       "shi-ru-po-zhu",
+       "xiong-you-cheng-zhu"
+      ],
+      "hint": "Irresistible momentum; sweeping advance; Have clear plan beforehand",
+      "label": "already, bamboo, first",
+      "value": "strategy-action--c0"
+     },
+     {
+      "exemplars": [
+       "chang-xiu-shan-wu",
+       "yi-lao-yong-yi"
+      ],
+      "hint": "Skilled maneuvering; Solve a problem once and for all",
+      "label": "long, mak, modern",
+      "value": "strategy-action--c1"
+     },
+     {
+      "exemplars": [
+       "bu-yue-er-tong",
+       "dang-ji-li-duan"
+      ],
+      "hint": "Arrive at same point without coordination; Make a prompt decision",
+      "label": "rather, meet, point",
+      "value": "strategy-action--c2"
+     },
+     {
+      "exemplars": [
+       "bu-bu-wei-ying",
+       "hou-gu-zhi-you"
+      ],
+      "hint": "Advance methodically with caution; Worry about the home front left behind",
+      "label": "rather, behind, fiction",
+      "value": "strategy-action--c3"
+     },
+     {
+      "exemplars": [
+       "qu-yang-gong-hu",
+       "yuan-jiao-jin-gong"
+      ],
+      "hint": "Send the weak against the strong to certain defeat; Strategic prioritization",
+      "label": "king, record, attack",
+      "value": "strategy-action--c4"
+     },
+     {
+      "exemplars": [
+       "wei-er-bu-gong",
+       "yi-tui-wei-jin"
+      ],
+      "hint": "Strategic patience; Strategic retreat for ultimate victory",
+      "label": "tak, way, strategic",
+      "value": "strategy-action--c5"
+     },
+     {
+      "exemplars": [
+       "an-jian-shang-ren",
+       "bai-nian-da-ji"
+      ],
+      "hint": "Covert attacks avoiding direct confrontation; Long-term plan; matter of lasting importance",
+      "label": "rather, him, use",
+      "value": "strategy-action--c6"
+     }
+    ],
+    "cluster_question": "Within “Strategy & Action”, which situation is closest to the input?",
+    "clusters_ref": [
+     "strategy-action--c0",
+     "strategy-action--c1",
+     "strategy-action--c2",
+     "strategy-action--c3",
+     "strategy-action--c4",
+     "strategy-action--c5",
+     "strategy-action--c6"
+    ],
+    "hint": "108 idioms",
+    "label": "Strategy & Action",
+    "value": "strategy-action"
+   },
+   {
+    "cluster_options": [
+     {
+      "exemplars": [
+       "ang-shou-ting-xiong",
+       "ji-liu-yong-jin"
+      ],
+      "hint": "Walk proudly; show confidence; Advance boldly through difficulty",
+      "label": "all, know, prais",
+      "value": "success-perseverance--c0"
+     },
+     {
+      "exemplars": [
+       "yu-hou-chun-sun",
+       "bai-li-tiao-yi"
+      ],
+      "hint": "Emerging rapidly in great numbers; Exceptional rarity",
+      "label": "rather, without, claim",
+      "value": "success-perseverance--c1"
+     },
+     {
+      "exemplars": [
+       "chi-zhi-yi-heng",
+       "kai-tian-pi-di"
+      ],
+      "hint": "Steadfast dedication; Groundbreaking achievement",
+      "label": "rather, thi, but",
+      "value": "success-perseverance--c2"
+     },
+     {
+      "exemplars": [
+       "tai-ran-zi-ruo",
+       "bo-yun-jian-ri"
+      ],
+      "hint": "Maintain perfect composure under pressure; Clear away confusion to see the truth",
+      "label": "someth, but, chang",
+      "value": "success-perseverance--c3"
+     },
+     {
+      "exemplars": [
+       "qian-che-zhi-jian",
+       "da-zhan-hong-tu"
+      ],
+      "hint": "Learn from past mistakes; May you carry out your big ambitions",
+      "label": "han, but, image",
+      "value": "success-perseverance--c4"
+     },
+     {
+      "exemplars": [
+       "deng-tang-ru-shi",
+       "fei-qin-wang-shi"
+      ],
+      "hint": "Progress from basic to advanced; So absorbed as to neglect basic needs",
+      "label": "work, describ, rather",
+      "value": "success-perseverance--c5"
+     },
+     {
+      "exemplars": [
+       "qi-kai-de-sheng",
+       "bai-zhan-bai-sheng"
+      ],
+      "hint": "Win at the very start; immediate success; Consistent success",
+      "label": "rather, first, said",
+      "value": "success-perseverance--c6"
+     },
+     {
+      "exemplars": [
+       "du-shu-yi-zhi",
+       "bie-ju-yi-ge"
+      ],
+      "hint": "Be unique; have distinctive style; Have unique style; be distinctive",
+      "label": "thi, claim, but",
+      "value": "success-perseverance--c7"
+     },
+     {
+      "exemplars": [
+       "ma-dao-cheng-gong",
+       "ma-dao-gong-cheng"
+      ],
+      "hint": "Achieve immediate success; Swift success",
+      "label": "rather, point, belong",
+      "value": "success-perseverance--c8"
+     }
+    ],
+    "cluster_question": "Within “Success & Perseverance”, which situation is closest to the input?",
+    "clusters_ref": [
+     "success-perseverance--c0",
+     "success-perseverance--c1",
+     "success-perseverance--c2",
+     "success-perseverance--c3",
+     "success-perseverance--c4",
+     "success-perseverance--c5",
+     "success-perseverance--c6",
+     "success-perseverance--c7",
+     "success-perseverance--c8"
+    ],
+    "hint": "202 idioms",
+    "label": "Success & Perseverance",
+    "value": "success-perseverance"
+   },
+   {
+    "cluster_options": [
+     {
+      "exemplars": [
+       "ai-li-cun-yang",
+       "kai-juan-you-yi"
+      ],
+      "hint": "Preserve a form so its meaning survives; Reading brings wisdom",
+      "label": "answer, day, dropp",
+      "value": "wisdom-learning--c0"
+     },
+     {
+      "exemplars": [
+       "bu-chi-xia-wen",
+       "qu-gao-he-gua"
+      ],
+      "hint": "Humble in learning; Sophisticated work appreciated by few",
+      "label": "ask, him, answer",
+      "value": "wisdom-learning--c1"
+     },
+     {
+      "exemplars": [
+       "ji-xiang-zhi-zhi",
+       "du-wan-juan-shu"
+      ],
+      "hint": "Blessings settle where the mind is calm; Read extensively for knowledge",
+      "label": "still, read, com",
+      "value": "wisdom-learning--c2"
+     },
+     {
+      "exemplars": [
+       "ban-jin-ba-liang",
+       "san-si-er-xing"
+      ],
+      "hint": "Essentially the same despite appearances; Weigh it before you move",
+      "label": "thi, but, modern",
+      "value": "wisdom-learning--c3"
+     },
+     {
+      "exemplars": [
+       "bao-xin-jiu-huo",
+       "cha-yan-guan-se"
+      ],
+      "hint": "Make situation worse; Read between lines",
+      "label": "read, argu, record",
+      "value": "wisdom-learning--c4"
+     },
+     {
+      "exemplars": [
+       "hui-ren-bu-juan",
+       "cheng-zhu-zai-xiong"
+      ],
+      "hint": "Teach with tireless patience; Have a well-thought-out plan; be confident",
+      "label": "work, same, without",
+      "value": "wisdom-learning--c5"
+     },
+     {
+      "exemplars": [
+       "dao-ting-tu-shuo",
+       "qing-che-shu-lu"
+      ],
+      "hint": "Unreliable information from casual hearsay; Be experienced; find something easy due to familiarity",
+      "label": "thi, but, someth",
+      "value": "wisdom-learning--c6"
+     },
+     {
+      "exemplars": [
+       "gui-fu-shen-gong",
+       "xun-xun-shan-you"
+      ],
+      "hint": "Supernatural craftsmanship; Draw a learner on step by step",
+      "label": "said, praise, describ",
+      "value": "wisdom-learning--c7"
+     },
+     {
+      "exemplars": [
+       "er-mu-yi-xin",
+       "gong-cheng-shen-tui"
+      ],
+      "hint": "A refreshing new experience; Retire after achieving success",
+      "label": "rather, thing, claim",
+      "value": "wisdom-learning--c8"
+     }
+    ],
+    "cluster_question": "Within “Wisdom & Learning”, which situation is closest to the input?",
+    "clusters_ref": [
+     "wisdom-learning--c0",
+     "wisdom-learning--c1",
+     "wisdom-learning--c2",
+     "wisdom-learning--c3",
+     "wisdom-learning--c4",
+     "wisdom-learning--c5",
+     "wisdom-learning--c6",
+     "wisdom-learning--c7",
+     "wisdom-learning--c8"
+    ],
+    "hint": "197 idioms",
+    "label": "Wisdom & Learning",
+    "value": "wisdom-learning"
+   }
+  ],
+  "question": "Which domain of life does the input text mainly deal with? Pick the single closest option."
+ },
+ "version": 1
+}
