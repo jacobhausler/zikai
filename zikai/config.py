@@ -20,6 +20,7 @@ class Settings(BaseSettings):
 
     # --- service ----------------------------------------------------
     api_keys: str = ""          # comma-separated keys accepted by /decide
+    api_keys_file: str = ""      # newline-separated keys (0600 pointer file)
     require_key: bool = True     # set false for local dev
     dashboard: bool = True
 
@@ -40,7 +41,15 @@ class Settings(BaseSettings):
 
     @property
     def key_set(self) -> set[str]:
-        return {k.strip() for k in self.api_keys.split(",") if k.strip()}
+        keys = {k.strip() for k in self.api_keys.split(",") if k.strip()}
+        if self.api_keys_file:
+            try:
+                p = Path(self.api_keys_file)
+                keys |= {ln.strip() for ln in p.read_text().splitlines()
+                         if ln.strip() and not ln.startswith("#")}
+            except OSError:
+                pass  # unreadable file = no extra keys, never a crash
+        return keys
 
 
 @lru_cache(maxsize=1)

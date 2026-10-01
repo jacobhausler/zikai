@@ -18,7 +18,7 @@ from pathlib import Path
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 
-from . import __version__
+from . import __version__, metrics
 from .config import get_settings
 from .engine import Engine, load_engine
 from .shapes import format_line, hydrate
@@ -31,6 +31,7 @@ def create_app(engine: Engine | None = None) -> FastAPI:
                   description="Decisions API over the chineseidioms.com corpus")
     app.state.engine = engine or load_engine(settings=get_settings())
     settings = app.state.engine.settings  # auth follows the engine's config
+    metrics.set_corpus(len(app.state.engine.corpus))
 
     class Auth:
         """Explicit callable dependency — settings bound on the instance,
@@ -55,12 +56,46 @@ def create_app(engine: Engine | None = None) -> FastAPI:
 
     auth = Auth(settings)
 
+    # --- hot-reload: the nightly rebuild lands new files in place; pick them
+    # up without a restart. Checked at most every 5s on the decide path.
+    import os as _os
+    import threading as _threading
+    import time as _time
+    _paths = [settings.corpus_path, settings.tree_path]
+    _mt = [_os.stat(p).st_mtime if _os.path.exists(p) else 0 for p in _paths]
+    _lock = _threading.Lock()
+    _last_check = [0.0]
+
+    def _maybe_reload():
+        now = _time.monotonic()
+        if now - _last_check[0] < 5:
+            return
+        _last_check[0] = now
+        fresh = [_os.stat(p).st_mtime if _os.path.exists(p) else 0
+                 for p in _paths]
+        if fresh != _mt:
+            with _lock:
+                try:
+                    eng = load_engine(settings)
+                    app.state.engine = eng
+                    metrics.set_corpus(len(eng.corpus))
+                    _mt[:] = fresh
+                except Exception:
+                    pass  # keep serving the last good corpus, never 500
+
     @app.get("/healthz")
     def healthz():
         e: Engine = app.state.engine
         return {"ok": True, "version": __version__,
                 "idioms": len(e.corpus), "clusters": len(e.tree["clusters"]),
                 "themes": len(e.tree["root"]["options"])}
+
+    @app.get("/metrics", include_in_schema=False)
+    def scrape():
+        from fastapi.responses import PlainTextResponse
+        return PlainTextResponse(metrics.exposition(),
+                                 media_type="text/plain; version=0.0.4")
+
 
     @app.post("/decide", dependencies=[Depends(auth)])
     @app.post("/v1/decisions", dependencies=[Depends(auth)])
@@ -84,10 +119,18 @@ def create_app(engine: Engine | None = None) -> FastAPI:
                 related_resolved: bool):
         if not text or not text.strip():
             raise HTTPException(422, "text is required")
+        _maybe_reload()
         e: Engine = app.state.engine
         if len(text) > 8000:
             text = text[:8000]
-        result = e.decide(text, decider=decider, trace=trace)
+        import time as _t
+        t0 = _t.perf_counter()
+        try:
+            result = e.decide(text, decider=decider, trace=trace)
+        except Exception:
+            metrics.note_error()
+            raise
+        metrics.note_decide(_t.perf_counter() - t0)
         result["idiom"] = hydrate(result["idiom"], level=level,
                                   extras=extras,
                                   related_resolved=related_resolved,
