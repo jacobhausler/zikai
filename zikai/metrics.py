@@ -34,11 +34,22 @@ def set_corpus(n: int) -> None:
     _CORPUS_SIZE = n
 
 
+def _rss_bytes() -> int:
+    try:
+        # /proc/self/statm field 2 = resident pages (Linux; 0 elsewhere).
+        with open("/proc/self/statm") as f:
+            return int(f.read().split()[1]) * 4096
+    except Exception:
+        return 0
+
+
 def exposition() -> str:
     avg = (_LATENCY_SUM / _DECIDES) if _DECIDES else 0.0
     lines = [
         "# TYPE zikai_uptime_seconds gauge",
         f"zikai_uptime_seconds {time.time() - START:.3f}",
+        "# TYPE zikai_process_rss_bytes gauge",
+        f"zikai_process_rss_bytes {_rss_bytes()}",
         "# TYPE zikai_decides_total counter",
         f"zikai_decides_total {_DECIDES}",
         "# TYPE zikai_decide_errors_total counter",
