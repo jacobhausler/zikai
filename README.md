@@ -12,6 +12,8 @@ named for a man who refused premature answers: the `confidence` field and the
 trace mode are that refusal encoded — the service always tells you how little
 it is sure of.
 
+[![dashboard](data/dashboard.png)](dashboard/index.html)
+
 **zikai** maps the [chineseidioms.com](https://www.chineseidioms.com) chengyu
 corpus (1072 idioms, hydrated) into a **shallow clustered decision tree**
 and serves it behind a **decisions-style API**: text in → the single most
