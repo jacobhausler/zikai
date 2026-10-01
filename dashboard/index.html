@@ -205,8 +205,9 @@ async function groveRandom(){
 }
 
 function grove(items){
-  $('grove').innerHTML=(items||[]).map(x=>
-    `<div class="word" data-s="${esc(x.slug)}"><div class="h">${esc(x.hanzi)}</div><div class="m">${esc((x.meaning||'').slice(0,48))}</div></div>`).join('');
+  $('grove').innerHTML=(items||[]).map(x=>{
+    const m=x.meaning||'';
+    return `<div class="word" data-s="${esc(x.slug)}"><div class="h">${esc(x.hanzi)}</div><div class="m">${esc(m.length>46?m.slice(0,46)+'…':m)}</div></div>`;}).join('');
   document.querySelectorAll('.word').forEach(w=>w.onclick=()=>openSlug(w.dataset.s));
 }
 
