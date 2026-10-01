@@ -142,3 +142,17 @@ def test_adapter_fallback_never_500(client):
     d = client.post("/decide", json={"text": "a slow decision",
                                      "decider": "openai"}).json()
     assert d["idiom"]["hanzi"]
+
+
+def test_hanzi_echo_ranks_gold_first():
+    # echo probes: hanzi in the input must bridge to the record (simplified
+    # vs traditional included — corpus hydrates simplified glyph sets)
+    e = Engine(corpus, tree, Settings(require_key=False, decider="lexical"), {})
+    from zikai.adapters import Lexical
+    e.adapters = {"lexical": Lexical()}; e.lexical = e.adapters["lexical"]
+    for text, gold in [("刻舟求剑 — grepped a stale log for the token",
+                        "ke-zhou-qiu-jian"),
+                       ("指鹿为马 — renamed the metric to flatter its owner",
+                        "zhi-lu-wei-ma")]:
+        rk = e._rank(text)
+        assert rk[0][0] == gold, f"{text}: expected {gold}, got {rk[0][0]}"

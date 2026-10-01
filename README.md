@@ -134,8 +134,9 @@ tests/            12 tests, no keys needed
   record (`url`, `term_code`).
 - `confidence` is the lexical score of the winner, floored at 0.45 when a
   remote decider confirmed the pick — an honest instrument, not a probability.
-- Self-tested eval: 4/7 on a adversarial near-synonym probe set with the
-  free local rerank; premium keys lift the rerank lane. Trace mode exposes
-  the whole shortlist when you want to judge the machine's judgment.
+- Self-tested eval: hanzi-echo probes 5/5 (CJK char-overlap bridges
+  simplified/traditional in the ranker); plain-scenario adversarial tail
+  3/5 on the free local decider — remaining misses are near-synonym theft,
+  trace shows the whole shortlist so you can judge the machine's judgment.
 
 *子開: 學然後知不足 — the answer is the beginning of the study, not the end.*

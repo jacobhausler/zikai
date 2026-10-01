@@ -119,7 +119,10 @@ class Engine:
         if not ranked:
             return (members[0] if members else ""), 0.0, []
         shortlist = ranked[:12]
-        if adapter.name == "lexical":
+        # A dominant lexical score (hanzi echo, exact slug, strong word
+        # overlap) needs no judge — scores sit under ~0.2 without it, so 0.4
+        # only fires on signals the decider could only contradict.
+        if adapter.name == "lexical" or shortlist[0][1] >= 0.4:
             return shortlist[0][0], round(shortlist[0][1], 3), ranked
         opts = [{"value": slug,
                  "label": f"{r.get('hanzi','')} {r.get('pinyin','')} — {r.get('meaning','')}",
@@ -139,15 +142,25 @@ class Engine:
     # ------------------------------------------------------------------
     def _rank(self, text: str, boost: set[str] | None = None) -> list[tuple[str, float]]:
         tw, tc = words(text), chargrams(text)
+        tl = text.lower()
+        # CJK char-set overlap bridges hanzi-in-input echoes WITHOUT a
+        # trad/simplified conversion table: shared characters score whether or
+        # not the glyphs match exactly (刻舟求劍 echo vs 刻舟求剑 corpus).
+        qcjk = {c for c in text if "\u4e00" <= c <= "\u9fff"}
         scored = []
-        for s in self.corpus:
-            r = self.corpus[s]
+        for s, r in self.corpus.items():
             blob = " ".join(str(r.get(k) or "") for k in
                             ("meaning", "literal", "meaning_metaphoric",
-                             "theme", "origin"))
+                             "theme", "origin", "example_en"))
+            hz = r.get("hanzi")
+            hz_bonus = 0.0
+            if qcjk and hz:
+                hzc = set(hz)
+                hz_bonus = 0.8 * len(qcjk & hzc) / len(qcjk | hzc)
             score = (0.5 * dice(tw, words(blob))
                      + 0.3 * cgram_sim(tc, blob)
-                     + (0.15 if s in text.lower() else 0.0)
+                     + hz_bonus
+                     + (0.15 if s in tl else 0.0)
                      + (0.05 if boost and s in boost else 0.0))
             scored.append((s, score))
         scored.sort(key=lambda t: (-t[1], t[0]))
