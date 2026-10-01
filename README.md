@@ -1,7 +1,16 @@
 # 子開 zikai — the idiom oracle
 
-> 學然後知不足 — *One teaches half the time; one studies the other half — and studying reveals the gap.*
-> — 子開 (Qidiao Kai, 漆雕開), Disciple of Confucius, who declined office to keep studying. This service is named after him: it answers, but its whole corpus exists to reveal the gap between what you said and what you meant.
+> 子使漆雕開仕。對曰：「吾斯之未能信。」子說。
+> *The Master urged Qidiao Kai to take office. "I have not yet made my
+> study trustworthy," he replied — and the Master was pleased.* (Analects 5.20)
+>
+> 是故學然後知不足。*Only after studying does one know one's own gap.* (學記, Book of Rites)
+
+This service is named after 子開 (Qidiao Kai, 漆雕開), the disciple who
+declined a government post rather than answer before he was ready. An oracle
+named for a man who refused premature answers: the `confidence` field and the
+trace mode are that refusal encoded — the service always tells you how little
+it is sure of.
 
 **zikai** maps the [chineseidioms.com](https://www.chineseidioms.com) chengyu
 corpus (1072 idioms, hydrated) into a **shallow clustered decision tree**
@@ -127,4 +136,4 @@ tests/            12 tests, no keys needed
   free local rerank; premium keys lift the rerank lane. Trace mode exposes
   the whole shortlist when you want to judge the machine's judgment.
 
-*子開, `學 then 不足` — the answer is the beginning of the study, not the end.*
+*子開: 學然後知不足 — the answer is the beginning of the study, not the end.*
