@@ -6,3 +6,4 @@ __pycache__/
 data/scrape.log
 data/nightly.log
 scripts/gh-cred.sh
+data/nightly.state
