@@ -176,6 +176,7 @@ def test_hard_board_wins_are_pinned():
     e = Engine(corpus, tree, Settings(require_key=False, decider="lexical"), {})
     from zikai.adapters import Lexical
     e.adapters = {"lexical": Lexical()}; e.lexical = e.adapters["lexical"]
-    rk = e._rank("They drained the entire weekly token budget on per-document "
-                 "model calls for this month's numbers; the lake is empty now")
+    rk = e._rank("They drained the entire weekly token budget on leaf-node "
+                 "model calls per document, got this month's throughput, and "
+                 "now the lake is empty for next month.")
     assert rk[0][0] == "jie-ze-er-yu"
