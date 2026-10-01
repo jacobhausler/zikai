@@ -99,17 +99,16 @@ def create_app(engine: Engine | None = None) -> FastAPI:
 
     @app.post("/decide", dependencies=[Depends(auth)])
     @app.post("/v1/decisions", dependencies=[Depends(auth)])
-    def decide_api(req: Request):
-        # SYNC def on purpose: the engine's model calls are blocking httpx.
-        # In an async def they would pin the event loop for the whole decider
-        # round-trip (~27s on a loaded lane) and time out every other request.
-        # FastAPI runs sync handlers in the threadpool; the loop stays free.
-        import json as _json
-        body = _json.loads(req.body() or b"{}")
-        return _decide(body.get("text"), body.get("decider"),
-                       body.get("level", "full"), body.get("extras"),
-                       bool(body.get("trace")),
-                       bool(body.get("related_resolved")))
+    async def decide_api(req: Request):
+        body = await req.json()
+        # The engine's model calls are blocking httpx (~27s on a loaded lane).
+        # Run them in the threadpool so the event loop never pins — an async
+        # decide would time out every concurrent request behind a slow call.
+        from fastapi.concurrency import run_in_threadpool
+        return await run_in_threadpool(
+            _decide, body.get("text"), body.get("decider"),
+            body.get("level", "full"), body.get("extras"),
+            bool(body.get("trace")), bool(body.get("related_resolved")))
 
     @app.get("/decide", dependencies=[Depends(auth)])
     def decide_get(q: str = Query(..., min_length=1),
