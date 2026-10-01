@@ -66,7 +66,7 @@ def create_app(engine: Engine | None = None) -> FastAPI:
     @app.post("/v1/decisions", dependencies=[Depends(auth)])
     async def decide_api(req: Request):
         body = await req.json()
-        return _decide(app, body.get("text"), body.get("decider"),
+        return _decide(body.get("text"), body.get("decider"),
                        body.get("level", "full"), body.get("extras"),
                        bool(body.get("trace")),
                        bool(body.get("related_resolved")))
@@ -76,10 +76,10 @@ def create_app(engine: Engine | None = None) -> FastAPI:
                    decider: str | None = None, level: str = "full",
                    extras: str | None = None, trace: bool = False,
                    related: bool = False):
-        return _decide(app, q, decider, level,
+        return _decide(q, decider, level,
                        extras.split(",") if extras else None, trace, related)
 
-    def _decide(app: FastAPI, text: str | None, decider: str | None,
+    def _decide(text: str | None, decider: str | None,
                 level: str, extras: list[str] | None, trace: bool,
                 related_resolved: bool):
         if not text or not text.strip():

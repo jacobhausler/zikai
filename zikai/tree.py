@@ -25,7 +25,8 @@ def _stem(w: str) -> str:
     return w
 
 
-def _words(s: str | None) -> set[str]:
+def words(s: str | None) -> set[str]:
+    """Bag-of-words with suffix-stripping (documented best-effort stemmer)."""
     if not s:
         return set()
     s = s.lower()
@@ -51,12 +52,20 @@ def dice(a: set[str], b: set[str]) -> float:
     return 2 * len(a & b) / (len(a) + len(b))
 
 
-class Record(dict):
-    __getattr__ = dict.get
+def chargrams(s: str, n: int = 3) -> set[str]:
+    s = re.sub(r"\s+", " ", s.lower())
+    return {s[i:i + n] for i in range(len(s) - n + 1)}
 
 
-def load_records(path: str | Path) -> list[Record]:
-    out: dict[str, Record] = {}
+def cgram_sim(q: set[str], blob: str) -> float:
+    b = chargrams(blob)
+    if not q or not b:
+        return 0.0
+    return len(q & b) / len(q | b)
+
+
+def load_records(path: str | Path) -> list[dict]:
+    out: dict[str, dict] = {}
     for line in Path(path).read_text(encoding="utf-8").splitlines():
         line = line.strip()
         if not line:
@@ -64,21 +73,19 @@ def load_records(path: str | Path) -> list[Record]:
         r = json.loads(line)
         # last write wins: nightly appends refreshed records for changed slugs
         if r.get("ok") and r.get("slug"):
-            out[r["slug"]] = Record(r)
+            out[r["slug"]] = r
     return list(out.values())
 
 
-def build_corpus(records: list[Record]) -> dict:
-    """Flat slug->record corpus plus a lexical index for the fallback decider."""
-    corpus: dict[str, dict] = {}
-    for r in records:
-        corpus[r["slug"]] = {k: v for k, v in r.items() if k != "ok"}
-    return corpus
+def build_corpus(records: list[dict]) -> dict:
+    """Flat slug->record corpus (records are already hydrated at scrape time)."""
+    return {r["slug"]: {k: v for k, v in r.items() if k != "ok"}
+            for r in records}
 
 
 def _tokens_for(r: dict) -> set[str]:
-    return _words(r.get("meaning")) | _words(r.get("literal")) | _words(
-        (r.get("origin") or "")[:400]) | _words(r.get("meaning_metaphoric"))
+    return words(r.get("meaning")) | words(r.get("literal")) | words(
+        (r.get("origin") or "")[:400]) | words(r.get("meaning_metaphoric"))
 
 
 def _label_cluster(rows: list[dict], taken: set[str]) -> tuple[str, list[str]]:
@@ -135,9 +142,8 @@ def build_tree(corpus: dict[str, dict]) -> dict:
             opts.append({
                 "value": cid,
                 "label": label or f"{theme} cluster {ci}",
-                "hint": "; ".join(
-                    f"{m.get('meaning')}" for m in exemplars_slugs(
-                        exemplars, corpus, 2)),
+                "hint": "; ".join(corpus[s]["meaning"] for s in exemplars[:2]
+                                  if s in corpus and corpus[s].get("meaning")),
                 "exemplars": exemplars,
             })
         tree["root"]["options"].append({

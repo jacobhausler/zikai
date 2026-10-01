@@ -1,0 +1,15 @@
+Name settled, <@541097446323781652>: 子開 · zikai — after 漆雕開 (Qidiao Kai), the disciple Confucius urged into office, who declined until his study could bear the weight: 吾斯之未能信 — "not yet confident in it." An oracle you trust because it says how little it is sure of: confidence and trace are first-class fields.
+github.com/jacobhausler/zikai
+
+· 1072 hydrated idioms (hanzi, pinyin, literal + metaphoric meaning, origin, examples, FAQ, related, source url) — robots-respecting, sitemap-driven pull from chineseidioms.com
+· Shallow clustered tree: 5 themes → 43 clusters, hard depth law of 2 questions. Final pick isn't a third question — global retrieve + decider rerank over the top 12, keyword-expansion hop keeps recall honest
+· Decisions API: POST /decide (+GET, /v1/decisions), /idioms, /tree, /stats. Levels full/compact/text/slug, extras[], trace, related_resolved
+· Adapter layer: openai, anthropic, openai_compat (aliases laya/sglang/vllm/together/groq/fireworks) + zero-key lexical. A vendor sneeze never 500s — nodes degrade to lexical
+· Serves with its own keys (ZIKAI_API_KEYS: Bearer / x-api-key / ?key=)
+· Dashboard at /: rice-paper + vermillion seal 開, vertical-hanzi card, near-miss drilldowns, 抽一句 draw, grove search — verified in a real headless browser, hanzi and all
+· Nightly armed (cron 05:17): sitemap resync → lastmod-incremental scrape → rebuild → dated snapshot commit pushed; ntfy ping only when the corpus changed
+· pytest 12 green, zero keys. Honest eval: 4/7 adversarial near-synonyms on the free decider; trace shows why
+
+The small model inside: airport security never opens every suitcase — two tag-questions route the belt, one station scans. Pay model calls at branch points, never at the leaves; 瓶頸 is the calls, not the corpus.
+
+<@1543330262329335928> floor is yours — counter the name or adopt it.

@@ -18,7 +18,7 @@ import time
 import httpx
 
 from .config import Settings
-from .tree import dice, _words
+from .tree import cgram_sim, chargrams, dice, words
 
 
 class Decision:
@@ -63,7 +63,7 @@ def _extract_choice(reply: str, options: list[dict]) -> str | None:
     for o, v in zip(options, vals):
         if re.search(rf'(^|[^a-z0-9-]){re.escape(v)}([^a-z0-9-]|$)', t):
             return o["value"]
-    scored = sorted(((dice(_words(t), _words(o["label"])), o["value"])
+    scored = sorted(((dice(words(t), words(o["label"])), o["value"])
                      for o in options), reverse=True)
     if scored and scored[0][0] >= 0.34:
         return scored[0][1]
@@ -83,7 +83,34 @@ class BaseAdapter:
         return []
 
 
-class OpenAICompat(BaseAdapter):
+_EXPAND_PROMPT = ("Give 6-10 lower-case English keywords/synonyms that a "
+                  "classical Chinese idiom (chengyu) would allegorically "
+                  "encode for this INPUT. Answer with ONLY a comma-separated "
+                  "list, no sentences.")
+
+
+class ChatAdapter(BaseAdapter):
+    """Shared decider/expand logic over one transport hook: _chat()."""
+
+    def decide(self, text: str, question: str, options: list[dict]) -> Decision:
+        reply, err, ms = self._chat(_prompt(text, question, options))
+        if err:
+            return Decision(None, adapter=self.name, latency_ms=ms, error=err)
+        return Decision(_extract_choice(reply, options), raw=reply[:120],
+                        adapter=self.name, latency_ms=ms)
+
+    def expand(self, text: str) -> list[str]:
+        reply, err, _ = self._chat(_EXPAND_PROMPT + f"\n\nINPUT:\n<<<\n{text}\n>>>")
+        if not reply:
+            return []
+        words = [w.strip().lower() for w in reply.replace("\n", ",").split(",")]
+        return [w for w in words if re.fullmatch(r"[a-z][a-z\- ]{1,24}", w)][:10]
+
+    def _chat(self, prompt: str) -> tuple[str, str | None, int]:
+        raise NotImplementedError
+
+
+class OpenAICompat(ChatAdapter):
     """Any chat-completions-compatible endpoint: OpenAI, laya, sglang,
     vllm, together, fireworks, groq, ollama..."""
 
@@ -95,24 +122,6 @@ class OpenAICompat(BaseAdapter):
         self.timeout = timeout
         self.name = name
 
-    def decide(self, text: str, question: str, options: list[dict]) -> Decision:
-        reply, err, ms = self._chat(_prompt(text, question, options))
-        if err:
-            return Decision(None, adapter=self.name, latency_ms=ms, error=err)
-        return Decision(_extract_choice(reply, options), raw=reply[:120],
-                        adapter=self.name, latency_ms=ms)
-
-    def expand(self, text: str) -> list[str]:
-        reply, err, _ = self._chat(
-            "Give 6-10 lower-case English keywords/synonyms that a classical "
-            "Chinese idiom (chengyu) would allegorically encode for this "
-            "INPUT. Answer with ONLY a comma-separated list, no sentences.\n\n"
-            f"INPUT:\n<<<\n{text}\n>>>")
-        if not reply:
-            return []
-        words = [w.strip().lower() for w in reply.replace("\n", ",").split(",")]
-        return [w for w in words if re.fullmatch(r"[a-z][a-z\- ]{1,24}", w)][:10]
-
     def _chat(self, prompt: str) -> tuple[str, str | None, int]:
         t0 = time.time()
         base = {"model": self.model, "temperature": 0, "max_tokens": 320,
@@ -120,19 +129,17 @@ class OpenAICompat(BaseAdapter):
         headers = {"Content-Type": "application/json"}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
-        body = dict(base, chat_template_kwargs={"enable_thinking": False})
+        # sglang-family wants enable_thinking off; OpenAI rejects the field
+        urls = [(base, dict(base, chat_template_kwargs={"enable_thinking": False})),
+                (base, base)]
         try:
-            try:
+            for i, (_, body) in enumerate(urls):
                 r = httpx.post(f"{self.base_url}/chat/completions", json=body,
                                headers=headers, timeout=self.timeout)
+                if r.status_code in (400, 422) and i == 0:
+                    continue
                 r.raise_for_status()
-            except httpx.HTTPStatusError as e:
-                # vendors that reject chat_template_kwargs (OpenAI et al)
-                if e.response.status_code not in (400, 422):
-                    raise
-                r = httpx.post(f"{self.base_url}/chat/completions", json=base,
-                               headers=headers, timeout=self.timeout)
-                r.raise_for_status()
+                break
             msg = r.json()["choices"][0]["message"]
             reply = (msg.get("content") or msg.get("reasoning")
                      or msg.get("reasoning_content") or "")
@@ -141,7 +148,7 @@ class OpenAICompat(BaseAdapter):
         return reply, None, int((time.time() - t0) * 1000)
 
 
-class Anthropic(BaseAdapter):
+class Anthropic(ChatAdapter):
     name = "anthropic"
 
     def __init__(self, base_url: str, api_key: str, model: str,
@@ -151,53 +158,23 @@ class Anthropic(BaseAdapter):
         self.model = model
         self.timeout = timeout
 
-    def decide(self, text: str, question: str, options: list[dict]) -> Decision:
+    def _chat(self, prompt: str) -> tuple[str, str | None, int]:
         t0 = time.time()
         try:
             r = httpx.post(f"{self.base_url}/v1/messages",
                            headers={"x-api-key": self.api_key,
                                     "anthropic-version": "2023-06-01",
                                     "content-type": "application/json"},
-                           json={"model": self.model, "max_tokens": 24,
+                           json={"model": self.model, "max_tokens": 320,
                                  "temperature": 0,
                                  "messages": [{"role": "user",
-                                               "content": _prompt(
-                                                   text, question, options)}]},
+                                               "content": prompt}]},
                            timeout=self.timeout)
             r.raise_for_status()
             reply = "".join(b.get("text", "") for b in r.json()["content"])
         except Exception as e:  # noqa: BLE001
-            return Decision(None, adapter=self.name,
-                            latency_ms=int((time.time() - t0) * 1000),
-                            error=f"{type(e).__name__}: {e}"[:200])
-        return Decision(_extract_choice(reply, options), raw=reply[:120],
-                        adapter=self.name,
-                        latency_ms=int((time.time() - t0) * 1000))
-
-    def expand(self, text: str) -> list[str]:
-        t0 = time.time()
-        try:
-            r = httpx.post(
-                f"{self.base_url}/v1/messages",
-                headers={"x-api-key": self.api_key,
-                         "anthropic-version": "2023-06-01",
-                         "content-type": "application/json"},
-                json={"model": self.model, "max_tokens": 200, "temperature": 0,
-                      "messages": [{"role": "user", "content":
-                                    "Give 6-10 lower-case English "
-                                    "keywords/synonyms that a classical "
-                                    "Chinese idiom (chengyu) would "
-                                    "allegorically encode for this INPUT. "
-                                    "Answer with ONLY a comma-separated "
-                                    f"list.\n\nINPUT:\n<<<\n{text}\n>>>"}]},
-                timeout=self.timeout)
-            r.raise_for_status()
-            reply = "".join(b.get("text", "") for b in r.json()["content"])
-        except Exception:  # noqa: BLE001
-            return []
-        words = [w.strip().lower() for w in reply.replace("\n", ",").split(",")]
-        return [w for w in words
-                if re.fullmatch(r"[a-z][a-z\- ]{1,24}", w)][:10]
+            return "", f"{type(e).__name__}: {e}"[:200], int((time.time() - t0) * 1000)
+        return reply, None, int((time.time() - t0) * 1000)
 
 
 class Lexical(BaseAdapter):
@@ -208,12 +185,12 @@ class Lexical(BaseAdapter):
     name = "lexical"
 
     def decide(self, text: str, question: str, options: list[dict]) -> Decision:
-        tw, tc = _words(text), _chargrams(text)
+        tw, tc = words(text), chargrams(text)
         best, best_s = None, -1.0
         for o in options:
             blob = (f"{o.get('label','')} {o.get('hint','')} "
                     f"{' '.join(o.get('exemplars', []))}")
-            s = 0.55 * dice(tw, _words(blob)) + 0.45 * _cgram_sim(tc, blob)
+            s = 0.55 * dice(tw, words(blob)) + 0.45 * cgram_sim(tc, blob)
             if s > best_s:
                 best, best_s = o, s
         if best is None:
@@ -222,16 +199,6 @@ class Lexical(BaseAdapter):
                         raw=best.get("label", ""), adapter=self.name)
 
 
-def _chargrams(s: str) -> set[str]:
-    s = re.sub(r"\s+", " ", s.lower())
-    return {s[i:i + 3] for i in range(len(s) - 2)}
-
-
-def _cgram_sim(q: set[str], blob: str) -> float:
-    b = _chargrams(blob)
-    if not q or not b:
-        return 0.0
-    return len(q & b) / len(q | b)
 
 
 def build_adapters(settings: Settings) -> dict[str, BaseAdapter]:

@@ -188,7 +188,7 @@ def main() -> int:
     t0 = time.time()
 
     def work(slug):
-        time.sleep(DELAY_S * (hash(slug) % args.workers))
+        time.sleep(DELAY_S)
         page = fetch(f"{BASE}/blog/{slug}")
         return slug, (parse_page(slug, page) if page else {"slug": slug, "ok": False, "error": "fetch"})
 

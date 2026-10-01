@@ -1,21 +1,20 @@
 """The decision engine: walk the shallow tree, hydrate the winner.
 
-Flow: text -> Q1 theme -> Q2 cluster -> intra-cluster ranking (lexical
-score against the cluster's idioms; the decider model only makes the two
-routing calls, the final pick is a scoring problem with the full record
-available). Depth is capped at MAX_TREE_DEPTH by tree law.
+Flow: text -> Q1 theme -> Q2 cluster -> retrieve-then-rerank pick. The two
+routing questions are guidance (provenance + boost); the shortlist is
+retrieved over the whole corpus so a wrong turn at Q2 can never evict the
+right idiom before the decider sees it. Depth capped at MAX_TREE_DEPTH:
+the rerank is a scoring stage, not a third question.
 """
 from __future__ import annotations
 
 import hashlib
-import json
-import re
 import time
 import uuid
 
-from .adapters import BaseAdapter, Lexical, _cgram_sim, resolve_adapter
+from .adapters import BaseAdapter, Lexical, resolve_adapter
 from .config import Settings
-from .tree import MAX_TREE_DEPTH, Record, dice, load_json, _words
+from .tree import MAX_TREE_DEPTH, cgram_sim, chargrams, dice, load_json, words
 
 
 class Engine:
@@ -33,126 +32,121 @@ class Engine:
                trace: bool = False) -> dict:
         t0 = time.time()
         adapter = resolve_adapter(decider, self.settings, self.adapters)
-        path: list[dict] = []
 
-        # Q1: theme
-        q1_opts = self.tree["root"]["options"]
-        d1 = adapter.decide(text, self.tree["root"]["question"], q1_opts)
-        if d1.value not in self._by_id or d1.value is None:
-            d1 = self.lexical.decide(text, self.tree["root"]["question"],
-                                     q1_opts)
-            if d1.value not in self._by_id:
-                d1.value = sorted(self._by_id)[0]
-                d1.adapter = d1.adapter or "lexical-default"
-        theme_opt = self._by_id[d1.value]
-        path.append({"node": "q1.theme", "question": self.tree["root"]["question"],
-                     "answer": d1.value, "adapter": d1.adapter,
-                     "latency_ms": d1.latency_ms, "error": d1.error})
-
-        # Q2: cluster within the theme
+        theme_opt, d1 = self._route(
+            text, adapter, self.tree["root"]["question"],
+            self.tree["root"]["options"], self._by_id)
         cl_opts = theme_opt["cluster_options"]
-        d2 = adapter.decide(text, theme_opt["cluster_question"], cl_opts)
-        valid = {o["value"] for o in cl_opts}
-        if d2.value not in valid:
-            d2 = self.lexical.decide(text, theme_opt["cluster_question"],
-                                     cl_opts)
-            if d2.value not in valid:
-                d2.value = sorted(valid)[0]
-        path.append({"node": "q2.cluster", "question": theme_opt["cluster_question"],
-                     "answer": d2.value, "adapter": d2.adapter,
-                     "latency_ms": d2.latency_ms, "error": d2.error})
+        valid = {o["value"]: o for o in cl_opts}
+        _cluster, d2 = self._route(
+            text, adapter, theme_opt["cluster_question"], cl_opts, valid)
 
-        # final pick = retrieve-then-rerank: the two routing questions above
-        # are guidance (provenance, boosts), but the shortlist is retrieved
-        # over the WHOLE corpus — a slightly-off routing answer must never
-        # evict the right idiom before the decider ever sees it. Remote
-        # adapters get one recall hop (semantic keyword expansion of the
-        # input) that widens the retrieval query; one rerank call over the
-        # top candidates is a scoring stage, not a tree level.
-        keywords: list[str] = []
-        if adapter.name != "lexical":
-            try:
-                keywords = adapter.expand(text)[:10]
-            except Exception:  # noqa: BLE001 — recall hop is optional
-                keywords = []
-        query = text if not keywords else text + " " + " ".join(keywords)
-        members = self.tree["clusters"][d2.value]["idioms"]
-        theme_boost = {s for cid in theme_opt["clusters_ref"]
-                       for s in self.tree["clusters"][cid]["idioms"]}
-        ranked_global = self._rank(query, list(self.corpus),
-                                   boost=theme_boost | set(members))
+        members = self.tree["clusters"][d2["answer"]]["idioms"]
+        boost = {s for cid in theme_opt["clusters_ref"]
+                 for s in self.tree["clusters"][cid]["idioms"]} | set(members)
+        ranked = self._candidates(text, adapter, boost)
         winner_slug, confidence, ranked = self._final_pick(
-            text, adapter, ranked_global, members)
-        runner_ups = [s for s, _ in ranked[1:4]]
+            text, adapter, ranked, members)
 
         out = {
             "id": f"dec_{uuid.uuid4().hex[:12]}",
             "input_digest": hashlib.sha256(text.encode()).hexdigest()[:16],
-            "decision_path": path,
-            "depth": min(len(path), MAX_TREE_DEPTH),
-            "cluster": d2.value,
+            "decision_path": [d1, d2],
+            "depth": MAX_TREE_DEPTH,
+            "cluster": d2["answer"],
             "theme": theme_opt["label"],
             "confidence": confidence,
-            "runner_ups": runner_ups,
-            "decider": adapter.name if not any(p["error"] for p in path)
+            "runner_ups": [s for s, _ in ranked[1:4]],
+            "decider": adapter.name if not (d1["error"] or d2["error"])
                        else f"{adapter.name}+fallback",
             "latency_ms": int((time.time() - t0) * 1000),
         }
         record = dict(self.corpus.get(winner_slug, {"slug": winner_slug}))
-        record["_rank_pool"] = {"cluster": d2.value, "pool_size": len(members),
-                                "rank": 1 if ranked else 0}
+        record["_rank_pool"] = {"cluster": d2["answer"], "pool_size": len(members)}
         out["idiom"] = record
         if trace:
             out["trace"] = [{"slug": s, "score": round(sc, 3)}
-                            for s, sc in ranked[:8]]
+                            for s, sc in ranked[:12]]
         return out
 
     # ------------------------------------------------------------------
+    def _route(self, text, adapter, question, options, valid):
+        """One routing node; a vendor sneeze degrades to lexical and never
+        500s or derails."""
+        d = adapter.decide(text, question, options)
+        if d.value not in valid:
+            d = self.lexical.decide(text, question, options)
+            if d.value not in valid:
+                d.value = sorted(valid)[0]
+        return valid[d.value], {"question": question, "answer": d.value,
+                                "adapter": d.adapter,
+                                "latency_ms": d.latency_ms, "error": d.error}
+
+    def _candidates(self, text: str, adapter: BaseAdapter,
+                    boost: set[str], n: int = 16) -> list[tuple[str, float]]:
+        """Shortlist = round-robin interleave of the RAW lexical rank and
+        the keyword-EXPANDED rank (remote adapters only). The union can only
+        add recall; a lucky expansion can never evict the raw winner. Merge
+        order is kept — re-sorting by raw score sinks keyword-discovered
+        candidates right back out of the shortlist."""
+        ranks = [self._rank(text, boost=boost)]
+        keywords: list[str] = []
+        if adapter.name != "lexical":
+            try:
+                keywords = adapter.expand(text)[:10]
+            except Exception:  # noqa: BLE001 — optional recall hop
+                keywords = []
+        if keywords:
+            ranks.append(self._rank(
+                text + " " + " ".join(keywords), boost=boost))
+        merged: dict[str, float] = {}
+        its = [iter(r) for r in ranks]
+        while len(merged) < n:
+            before = len(merged)
+            for it in its:
+                for s, sc in it:
+                    if s not in merged:
+                        merged[s] = sc
+                        break
+            if len(merged) == before:
+                break
+        return list(merged.items())
+
     def _final_pick(self, text: str, adapter: BaseAdapter,
                     ranked: list[tuple[str, float]],
                     members: list[str]) -> tuple[str, float, list]:
-        """Final pick = lexical shortlist, then (remote adapters only) ONE
-        rerank call over the top candidates. This is a scoring stage, not a
-        tree level — decision depth stays capped at MAX_TREE_DEPTH."""
+        """One rerank call over the shortlist (remote adapters only)."""
         if not ranked:
             return (members[0] if members else ""), 0.0, []
         shortlist = ranked[:12]
-        if adapter.name == "lexical" or getattr(adapter, "name", "") == "lexical":
+        if adapter.name == "lexical":
             return shortlist[0][0], round(shortlist[0][1], 3), ranked
-        opts = []
-        for slug, score in shortlist:
-            r = self.corpus.get(slug, {})
-            opts.append({
-                "value": slug,
-                "label": f"{r.get('hanzi','')} {r.get('pinyin','')} — {r.get('meaning','')}",
-                "hint": f"literal: {r.get('literal') or r.get('meaning')}",
-            })
+        opts = [{"value": slug,
+                 "label": f"{r.get('hanzi','')} {r.get('pinyin','')} — {r.get('meaning','')}",
+                 "hint": f"literal: {r.get('literal') or r.get('meaning')}"}
+                for slug, _ in shortlist if (r := self.corpus.get(slug))]
         d = adapter.decide(
             text,
             "Which single idiom best fits the INPUT? Judge by meaning fit, "
             "not word overlap. Answer with ONLY the slug value.", opts)
-        if d.value and d.value in {s for s, _ in shortlist}:
-            # rerank winner first, keep the rest for runner-ups
-            reordered = [t for t in shortlist if t[0] == d.value] + \
-                        [t for t in shortlist if t[0] != d.value]
-            conf = max(round(shortlist[0][1], 3), 0.45)
-            self._last_rerank = d
-            return d.value, conf, reordered + ranked[len(shortlist):]
-        self._last_rerank = d
+        if d.value in {s for s, _ in shortlist}:
+            reordered = ([t for t in shortlist if t[0] == d.value]
+                         + [t for t in shortlist if t[0] != d.value])
+            return d.value, max(round(shortlist[0][1], 3), 0.45), \
+                reordered + ranked[len(shortlist):]
         return shortlist[0][0], round(shortlist[0][1], 3), ranked
 
     # ------------------------------------------------------------------
-    def _rank(self, text: str, slugs: list[str],
-              boost: set[str] | None = None) -> list[tuple[str, float]]:
-        tw, tc = _words(text), _chargrams(text)
+    def _rank(self, text: str, boost: set[str] | None = None) -> list[tuple[str, float]]:
+        tw, tc = words(text), chargrams(text)
         scored = []
-        for s in slugs:
-            r = self.corpus.get(s, {})
+        for s in self.corpus:
+            r = self.corpus[s]
             blob = " ".join(str(r.get(k) or "") for k in
                             ("meaning", "literal", "meaning_metaphoric",
                              "theme", "origin"))
-            score = (0.5 * dice(tw, _words(blob))
-                     + 0.3 * _cgram_sim(tc, blob)
+            score = (0.5 * dice(tw, words(blob))
+                     + 0.3 * cgram_sim(tc, blob)
                      + (0.15 if s in text.lower() else 0.0)
                      + (0.05 if boost and s in boost else 0.0))
             scored.append((s, score))
@@ -161,12 +155,7 @@ class Engine:
 
 
 def load_engine(settings: Settings) -> Engine:
-    corpus = load_json(settings.corpus_path)
-    tree = load_json(settings.tree_path)
     from .adapters import build_adapters
-    return Engine(corpus, tree, settings, build_adapters(settings))
-
-
-def _chargrams(s: str) -> set[str]:
-    s = re.sub(r"\s+", " ", s.lower())
-    return {s[i:i + 3] for i in range(len(s) - 2)}
+    return Engine(load_json(settings.corpus_path),
+                  load_json(settings.tree_path),
+                  settings, build_adapters(settings))
