@@ -5,3 +5,4 @@ __pycache__/
 .pytest_cache/
 data/scrape.log
 data/nightly.log
+scripts/gh-cred.sh
