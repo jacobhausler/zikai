@@ -91,8 +91,8 @@ zikai nightly --push    # resync sitemaps → scrape changed → rebuild → git
 ```
 
 The data artifacts (`corpus.json`, `decision_tree.json`, `records.jsonl`)
-are committed on the `data` branch so the mapping history is reviewable.
-Schedule with cron/systemd:
+are committed with date-stamped snapshot commits so the mapping history is
+reviewable per-night. Schedule with cron/systemd:
 
 ```cron
 17 5 * * * cd /path/to/zikai && .venv/bin/zikai nightly --push >> data/nightly.log 2>&1

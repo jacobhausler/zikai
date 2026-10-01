@@ -19,9 +19,8 @@ def main(argv: list[str] | None = None) -> int:
     b.add_argument("--out-dir", default=str(REPO_ROOT / "data"))
 
     n = sub.add_parser("nightly", help="resync slugs, scrape changed, rebuild, (optional) git push")
-    n.add_argument("--push", action="store_true", help="git add/commit/push data artifacts")
+    n.add_argument("--push", action="store_true", help="git add/commit/push data artifacts on the current branch")
     n.add_argument("--force", action="store_true")
-    n.add_argument("--branch", default="data")
 
     s = sub.add_parser("serve", help="uvicorn the decisions API + dashboard")
     s.add_argument("--host", default="0.0.0.0")
@@ -97,7 +96,8 @@ def _nightly(args) -> int:
     out = load_engine(get_settings()).decide("The team kept guessing without data.")
     assert out["idiom"]["slug"], "empty decision"
     print(f"[nightly] self-test pick: {hydrate(out['idiom'], level='text')}")
-    # 5. optional git push
+    # 5. optional git push (current branch; no --branch games: one branch,
+    # honest history of mapping snapshots)
     if args.push:
         g = lambda *a: subprocess.run(["git", *a], cwd=REPO_ROOT, check=True)  # noqa: E731
         g("add", "data/corpus.json", "data/decision_tree.json",
@@ -109,8 +109,11 @@ def _nightly(args) -> int:
         else:
             from datetime import date
             g("commit", "-m", f"data: mapping snapshot {date.today().isoformat()}")
-            g("push", "origin", args.branch)
-            print("[nightly] pushed snapshot to origin/" + args.branch)
+            branch = subprocess.run(
+                ["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=REPO_ROOT,
+                capture_output=True, text=True).stdout.strip()
+            g("push", "origin", branch)
+            print(f"[nightly] pushed snapshot to origin/{branch}")
     return 0
 
 
