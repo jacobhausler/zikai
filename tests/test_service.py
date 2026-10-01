@@ -153,6 +153,29 @@ def test_hanzi_echo_ranks_gold_first():
     for text, gold in [("刻舟求剑 — grepped a stale log for the token",
                         "ke-zhou-qiu-jian"),
                        ("指鹿为马 — renamed the metric to flatter its owner",
-                        "zhi-lu-wei-ma")]:
+                        "zhi-lu-wei-ma"),
+                       ("盲人摸象 — every node green, fleet story wrong",
+                        "mang-ren-mo-xiang"),
+                       ("对牛弹琴 — payload to an endpoint that can't parse it",
+                        "dui-niu-tan-qin"),
+                       ("竭泽而渔 — drained the token pond this month",
+                        "jie-ze-er-yu")]:
         rk = e._rank(text)
         assert rk[0][0] == gold, f"{text}: expected {gold}, got {rk[0][0]}"
+
+
+# KNOWN-HARD (permanent board, posted to the guild 2026-10-01): plain-scenario
+# probes. Of Austin's five, the CLEAN wins decompose as:
+#   jie-ze-er-yu    — raw lexical rank 1: deterministic, pinned below
+#   dui-niu-tan-qin — raw rank 16, rescued by the keyword-union + rerank lane
+#   mang-ren-mo-xiang — same lane; both depend on the remote decider, so they
+#     live in the ECHO pins + the scoreboard, not in zero-key tests.
+# Losers (recall floor of the free decider, expected fails):
+#   ke-zhou-qiu-jian, zhi-lu-wei-ma — gold never reaches the 12-slot shortlist.
+def test_hard_board_wins_are_pinned():
+    e = Engine(corpus, tree, Settings(require_key=False, decider="lexical"), {})
+    from zikai.adapters import Lexical
+    e.adapters = {"lexical": Lexical()}; e.lexical = e.adapters["lexical"]
+    rk = e._rank("They drained the entire weekly token budget on per-document "
+                 "model calls for this month's numbers; the lake is empty now")
+    assert rk[0][0] == "jie-ze-er-yu"
