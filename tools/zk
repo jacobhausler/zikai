@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""zk — the one-file CLI adapter. Every harness's harness.
+
+Contract: imports zikai.client and nothing else. Two env vars:
+ZIKAI_URL, ZIKAI_KEY. Verbs:
+
+  zk decide "situation text"   one line: idiom + pinyin + gloss [label]
+  zk decide --json ...         raw response, label field verbatim
+  zk draw                      a random idiom (fortune cookie)
+  zk stats                     corpus/cluster counts
+
+The `decider:` label is printed VERBATIM — never normalized, never trimmed.
+`+fallback` / `+judge_lexical` are data, not decoration. Down endpoint:
+prints `oracle: unavailable`, exit 1 — never a remembered idiom.
+"""
+import argparse
+import json
+import random
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from zikai.client import Client, ZikaiError, line  # the whole dependency
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(prog="zk", description=__doc__.splitlines()[0])
+    ap.add_argument("verb", choices=("decide", "draw", "stats"))
+    ap.add_argument("text", nargs="*", help="situation for decide")
+    ap.add_argument("--json", action="store_true", help="raw response")
+    ap.add_argument("--level", default="compact",
+                    choices=("full", "compact", "text", "slug"))
+    ap.add_argument("--trace", action="store_true")
+    a = ap.parse_args(argv)
+    c = Client()
+    try:
+        if a.verb == "decide":
+            if not a.text:
+                ap.error("decide needs situation text")
+            r = c.decide(" ".join(a.text), level=a.level, trace=a.trace)
+        elif a.verb == "stats":
+            r = c.stats()
+        else:  # draw: same house trick as the dashboard's 抽一句 —
+            # vowel-search a sample pool, pick one at random. No new verb.
+            import urllib.parse
+            # _get is transport, not policy — reusing the die, not recasting it
+            pool = c._get("/idioms?q=a&limit=200")["results"]
+            pick = random.choice(pool)
+            r = c.idiom(urllib.parse.quote(pick["slug"]))["idiom"]
+    except ZikaiError:
+        print("oracle: unavailable")   # honest absence, never a remembered one
+        return 1
+    if a.json or a.verb == "stats":
+        print(json.dumps(r, ensure_ascii=False, indent=1))
+        return 0
+    if a.verb == "draw":
+        r = {"idiom": r, "decider": "draw"}
+    print(line(r) if "idiom" in r else line({"idiom": r}))
+    if (r.get("decider") or "").strip():
+        print(f"decider: {r['decider']}")   # verbatim. the law.
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
