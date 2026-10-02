@@ -45,8 +45,18 @@ class Engine:
         boost = {s for cid in theme_opt["clusters_ref"]
                  for s in self.tree["clusters"][cid]["idioms"]} | set(members)
         ranked = self._candidates(text, adapter, boost)
-        winner_slug, confidence, ranked = self._final_pick(
+        winner_slug, confidence, ranked, judge_fell_back = self._final_pick(
             text, adapter, ranked, members)
+
+        # The label stamps what RAN, not what was asked for (austin-exec
+        # receipt, self-hosted chengyuserver): a remote adapter silently
+        # replaced by lexical at any node is +fallback; a dropped rerank
+        # judge is +judge_lexical. Green counter, honest message.
+        label = adapter.name
+        if judge_fell_back:
+            label += "+judge_lexical"
+        if d1["error"] or d2["error"] or d1["fell_back"] or d2["fell_back"]:
+            label += "+fallback"     # ends +fallback: client's [lexical] holds
 
         out = {
             "id": f"dec_{uuid.uuid4().hex[:12]}",
@@ -57,8 +67,7 @@ class Engine:
             "theme": theme_opt["label"],
             "confidence": confidence,
             "runner_ups": [s for s, _ in ranked[1:4]],
-            "decider": adapter.name if not (d1["error"] or d2["error"])
-                       else f"{adapter.name}+fallback",
+            "decider": label,
             "latency_ms": int((time.time() - t0) * 1000),
         }
         record = dict(self.corpus.get(winner_slug, {"slug": winner_slug}))
@@ -72,15 +81,21 @@ class Engine:
     # ------------------------------------------------------------------
     def _route(self, text, adapter, question, options, valid):
         """One routing node; a vendor sneeze degrades to lexical and never
-        500s or derails."""
+        500s or derails. fell_back records the SILENT degrade — the model
+        answered (no error) but its answer was unusable and lexical cooked
+        instead; the decider label must not hide that (austin-exec find)."""
         d = adapter.decide(text, question, options)
+        fell_back = False
+        orig_err = d.error
         if d.value not in valid:
+            fell_back = d.adapter != "lexical"
             d = self.lexical.decide(text, question, options)
             if d.value not in valid:
                 d.value = sorted(valid)[0]
         return valid[d.value], {"question": question, "answer": d.value,
-                                "adapter": d.adapter,
-                                "latency_ms": d.latency_ms, "error": d.error}
+                                "adapter": d.adapter, "fell_back": fell_back,
+                                "latency_ms": d.latency_ms,
+                                "error": d.error or orig_err}
 
     def _candidates(self, text: str, adapter: BaseAdapter,
                     boost: set[str], n: int = 16) -> list[tuple[str, float]]:
@@ -114,16 +129,19 @@ class Engine:
 
     def _final_pick(self, text: str, adapter: BaseAdapter,
                     ranked: list[tuple[str, float]],
-                    members: list[str]) -> tuple[str, float, list]:
-        """One rerank call over the shortlist (remote adapters only)."""
+                    members: list[str]) -> tuple[str, float, list, bool]:
+        """One rerank call over the shortlist (remote adapters only).
+        Returns (slug, conf, ranked, judge_fell_back) — judge_fell_back is
+        True only when the judge WAS asked and its answer was unusable;
+        a by-design skip (dominant lexical signal) is not a degrade."""
         if not ranked:
-            return (members[0] if members else ""), 0.0, []
+            return (members[0] if members else ""), 0.0, [], False
         shortlist = ranked[:12]
         # A dominant lexical score (hanzi echo, exact slug, strong word
         # overlap) needs no judge — scores sit under ~0.2 without it, so 0.4
         # only fires on signals the decider could only contradict.
         if adapter.name == "lexical" or shortlist[0][1] >= 0.4:
-            return shortlist[0][0], round(shortlist[0][1], 3), ranked
+            return shortlist[0][0], round(shortlist[0][1], 3), ranked, False
         opts = [{"value": slug,
                  "label": f"{r.get('hanzi','')} {r.get('pinyin','')} — {r.get('meaning','')}",
                  "hint": f"literal: {r.get('literal') or r.get('meaning')}"}
@@ -136,8 +154,8 @@ class Engine:
             reordered = ([t for t in shortlist if t[0] == d.value]
                          + [t for t in shortlist if t[0] != d.value])
             return d.value, max(round(shortlist[0][1], 3), 0.45), \
-                reordered + ranked[len(shortlist):]
-        return shortlist[0][0], round(shortlist[0][1], 3), ranked
+                reordered + ranked[len(shortlist):], False
+        return shortlist[0][0], round(shortlist[0][1], 3), ranked, True
 
     # ------------------------------------------------------------------
     def _rank(self, text: str, boost: set[str] | None = None) -> list[tuple[str, float]]:
