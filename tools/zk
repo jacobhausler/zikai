@@ -12,6 +12,8 @@ ZIKAI_URL, ZIKAI_KEY. Verbs:
 The `decider:` label is printed VERBATIM — never normalized, never trimmed.
 `+fallback` / `+judge_lexical` are data, not decoration. Down endpoint:
 prints `oracle: unavailable`, exit 1 — never a remembered idiom.
+`decide` is deterministic — `random` lives only in `draw` (a cookie that
+repeats is a bug).
 """
 import argparse
 import json
