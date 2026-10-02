@@ -8,6 +8,7 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 
@@ -83,6 +84,18 @@ def test_receipt_header_adapter(lane):
              ["we trusted the green counter and it was the counter that died"],
              {"ZIKAI_URL": lane, "ZIKAI_KEY": ""})
     assert r.returncode == 0 and "— zikai ·" in r.stdout
+
+
+def test_prepare_commit_hook_poems_without_git(lane):
+    # Austin's crun receipt: python:3.12-slim has no git binary. The hook must
+    # still poem from the message alone (stat is garnish, not dependency).
+    msgfile = "/tmp/zk-adapt-commitmsg-nogit"
+    open(msgfile, "w").write("fix: inspected the pen only from inside the pen\n")
+    empty = tempfile.mkdtemp()                     # PATH with no git on it
+    r = _run("adapters/git-prepare-commit-msg/zikai-prepare-commit-msg.py",
+             [msgfile], {"ZIKAI_URL": lane, "ZIKAI_KEY": "", "PATH": empty})
+    assert r.returncode == 0
+    assert "Zikai:" in open(msgfile).read()        # poem survives the missing binary
 
 
 def test_prepare_commit_hook_adapter_silent_when_down(lane):

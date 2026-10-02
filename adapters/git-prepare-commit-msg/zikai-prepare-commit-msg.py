@@ -29,9 +29,16 @@ def main(argv: list[str]) -> int:
         msg = open(msgfile, encoding="utf-8").read()
         if "Zikai:" in msg:          # amend-safe idempotence
             return 0
-        git = lambda *a: subprocess.run(
-            ["git", *a], capture_output=True, text=True, timeout=5
-        ).stdout
+        def git(*a):
+            # stat is a garnish, not a dependency: an image with no git
+            # binary (slim containers) must still get a poem from the
+            # message alone — the message is decidable text by itself.
+            try:
+                return subprocess.run(
+                    ["git", *a], capture_output=True, text=True, timeout=5
+                ).stdout
+            except Exception:
+                return ""
         stat = git("diff", "--cached", "--stat")[:400]
         text = (msg + "\n" + stat).strip()
         if len(msg.strip()) < 4:      # empty/editor-open invocation: skip
