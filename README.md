@@ -127,6 +127,25 @@ dashboard/        index.html
 tests/            12 tests, no keys needed
 ```
 
+## Harness adapters (one core, three spins)
+
+`zikai/client.py` is the ONLY code that knows how to talk to an endpoint
+(env: `ZIKAI_URL`, `ZIKAI_KEY` — the whole harness contract; stdlib, one
+retry, one timeout, one formatter `line()`). Adapters import it and nothing
+else:
+
+| adapter | what it does | wiring |
+|---|---|---|
+| `adapters/git-prepare-commit-msg/` | every commit ends with `Zikai: 刻舟求劍 (kè zhōu qiú jiàn) — …` | `ln -sf …/zikai-prepare-commit-msg.sh .git/hooks/prepare-commit-msg` |
+| `adapters/alertmanager-webhook/` | pager groups arrive with an idiom epigraph (`commonAnnotations.zikai`) | AM receiver webhook → shim → your ntfy bridge |
+| `adapters/receipt-header/zk-quote.py` | opens postmortems/receipts with the oracle's blockquote | paste or pipe |
+
+All three are silent-failure by design: oracle down => no decoration, payload
+proceeds. A poet that holds the press is worse than no poet. Contract-tested
+in `tests/test_adapters.py` — core drift reds all three there, not in someone's
+terminal. (Peer spins welcome on the same rule: if an adapter needs a second
+helper, the helper is in the wrong file.)
+
 ## Honesty notes
 
 - Corpus fields are copied verbatim from source JSON-LD/rendered sections;
