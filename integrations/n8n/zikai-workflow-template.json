@@ -1,0 +1,53 @@
+{
+  "name": "zikai decide",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "decide",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"text\": $('Trigger').first().json.text, \"level\": \"compact\" } }}",
+        "options": {
+          "allowUnauthorizedCerts": false,
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              { "name": "x-api-key", "value": "REPLACE_WITH_ZIKAI_KEY" },
+              { "name": "content-type", "value": "application/json" }
+            ]
+          }
+        }
+      },
+      "id": "zikai-decide",
+      "name": "zikai decide",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [240, 0],
+      "notes": "Point the node's Base URL at your zikai instance (e.g. http://127.0.0.1:8077). The header name is x-api-key — that is the header zikai's Auth actually reads (also accepts Authorization: Bearer or ?key=). x-zikai-key is NOT a zikai header; replace the value with a real key from the server's keys file."
+    },
+    {
+      "parameters": {
+        "rule": {
+          "values": [
+            { "cellType": "json", "json": "={{ { \"text\": \"build vs. ship\" } }}" }
+          ]
+        }
+      },
+      "id": "trigger",
+      "name": "Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    }
+  ],
+  "connections": {
+    "Trigger": {
+      "main": [
+        [ { "node": "zikai decide", "type": "main", "index": 0 } ]
+      ]
+    }
+  },
+  "settings": {},
+  "pinData": {}
+}

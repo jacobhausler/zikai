@@ -12,6 +12,7 @@ openai -> anthropic -> lexical (zero-key, always available).
 """
 from __future__ import annotations
 
+import os
 import re
 import time
 
@@ -222,18 +223,130 @@ def build_adapters(settings: Settings) -> dict[str, BaseAdapter]:
     return a
 
 
-_ALIAS = {"laya": "openai_compat", "sglang": "openai_compat",
-          "vllm": "openai_compat", "ollama": "openai_compat",
-          "together": "openai", "groq": "openai", "fireworks": "openai",
-          "deepseek": "openai_compat", "openrouter": "openai"}
+# name: (transport, default base_url, default model, env keys).
+# Rows with an empty base_url/model are legacy aliases (old _ALIAS): they
+# only pick up an adapter build_adapters already configured, never built
+# on the fly. Vendor docs per recon 2026-10-02; UNVERIFIED rows flagged.
+PROVIDER_PRESETS: dict[str, tuple[str, str, str, tuple[str, ...]]] = {
+    # Jev/Perplexity serve their own decision POST (/v1/systemone, /v1/decisions),
+    # NOT /chat/completions — no adapter class yet; resolve falls through to auto.
+    "jev-typesafe": ("decisions_api", "https://api.typesafe.ai/v1",
+                     "jev-latest", ("TYPESAFE_API_KEY", "TYPESAFE_API_BASE")),
+    "perplexity-decisions": ("decisions_api", "https://api.perplexity.ai/v1",
+                             "pplx-decider-v1-27b", ("PERPLEXITY_API_KEY",)),
+    # UNVERIFIED: OpenAI Decisions API is preview-only, no model id published;
+    # empty model = never routed (gate lifted when the changelog documents it).
+    "openai-decisions": ("openai", "https://api.openai.com/v1", "",
+                         ("OPENAI_API_KEY",)),
+    # laya/kev/jeff/anyjev natively speak the Jev /v1/systemone shape; the
+    # openai_compat chat leg against them is UNVERIFIED (per recon).
+    "laya": ("openai_compat", "http://127.0.0.1:8000/v1", "laya",
+             ("LAYA_BASE_URL", "LAYA_MODEL", "LAYA_API_KEY")),
+    "anyjev": ("openai_compat", "http://localhost:8000/v1", "qwen-b18",
+               ("ANYJEV_BASE_URL", "ANYJEV_MODEL")),
+    "jeff": ("openai_compat", "http://localhost:8765/v1", "jeff-latest",
+             ("JEFF_BASE_URL", "JEFF_MODEL", "JEFF_CHECKPOINT",
+              "JEFF_ADAPTERS", "JEFF_BACKEND")),
+    "kev": ("openai_compat", "http://127.0.0.1:8009/v1", "jaredpalmer/kev-4b",
+            ("KEV_BASE_URL", "KEV_MODEL", "KEV_API_KEY")),
+    # /responses needs its own call shape — no adapter class yet; auto-falls.
+    "openai_responses": ("responses", "https://api.openai.com/v1",
+                         "gpt-4o-mini", ("OPENAI_API_KEY",)),
+    # 3-5 generation retired upstream; rows kept for pin-compat only.
+    "anthropic-3-5-haiku": ("anthropic", "https://api.anthropic.com",
+                            "claude-3-5-haiku-latest", ("ANTHROPIC_API_KEY",)),
+    "anthropic-3-5-sonnet": ("anthropic", "https://api.anthropic.com",
+                             "claude-3-5-sonnet-latest",
+                             ("ANTHROPIC_API_KEY",)),
+    "gemini": ("openai_compat",
+               "https://generativelanguage.googleapis.com/v1beta/openai",
+               "gemini-3.8-flash", ("GEMINI_API_KEY",)),
+    "vllm-constrained-choice": ("openai_compat", "http://127.0.0.1:8000/v1",
+                                "qwen38-next", ("ZIKAI_LAYA_BASE_URL",
+                                                "ZIKAI_LAYA_API_KEY",
+                                                "ZIKAI_LAYA_MODEL")),
+    # rerankers: consumed by the Engine rerank hook (zikai/engine.py), not by resolve.
+    "cohere_rerank": ("cohere_rerank", "https://api.cohere.com/v2",
+                      "rerank-v3.5", ("CO_API_KEY",)),
+    "jina_rerank": ("jina_rerank", "https://api.jina.ai/v1",
+                    "jina-reranker-v2-base-multilingual", ("JINA_API_KEY",)),
+    "openrouter": ("openai_compat", "https://openrouter.ai/api/v1",
+                   "openai/gpt-4o", ("OPENROUTER_API_KEY",)),
+    "vercel_ai_gateway": ("openai_compat", "https://ai-gateway.vercel.sh/v1",
+                          "anthropic/claude-sonnet-5",
+                          ("AI_GATEWAY_API_KEY",)),
+    # venice model id is the docs example — UNVERIFIED as decider-quality.
+    "venice": ("openai_compat", "https://api.venice.ai/api/v1",
+               "zai-org-glm-5-1", ("VENICE_API_KEY",)),
+    # legacy aliases (were _ALIAS): transport-only rows.
+    "sglang": ("openai_compat", "", "", ()),
+    "vllm": ("openai_compat", "", "", ()),
+    "ollama": ("openai_compat", "", "", ()),
+    "together": ("openai", "", "", ()),
+    "groq": ("openai", "", "", ()),
+    "fireworks": ("openai", "", "", ()),
+    "deepseek": ("openai_compat", "", "", ()),
+}
+
+
+def rerank(transport: str, query: str, docs: list[str],
+           timeout: float) -> list[int] | None:
+    """Vendor rerank for the cohere_rerank/jina_rerank preset rows.
+    Both speak {model, query, documents} -> {results: [{index}]}.
+    Returns reordered doc indices, or None = not configured / any failure
+    (fail-open: the caller keeps its own order)."""
+    row = PROVIDER_PRESETS.get(transport)
+    if not row or not row[0].endswith("_rerank") or not docs:
+        return None
+    key = os.environ.get(row[3][0], "")
+    if not key:
+        return None
+    url = row[1] + ("/rank" if transport == "cohere_rerank" else "/rerank")
+    try:
+        r = httpx.post(url, json={"model": row[2], "query": query,
+                                 "documents": docs, "top_n": len(docs)},
+                       headers={"Authorization": f"Bearer {key}"},
+                       timeout=timeout)
+        r.raise_for_status()
+        return [int(i["index"]) for i in r.json()["results"]]
+    except Exception:  # noqa: BLE001 — optional hop, caller falls back
+        return None
+
+
+def _build_from_preset(name: str, timeout: float) -> BaseAdapter | None:
+    """On-the-fly adapter for a preset whose transport has a class; env keys
+    in the row override the row defaults. Remote rows without their key env,
+    and class-less transports (decisions/responses/rerank), => None."""
+    transport, base, model, envs = PROVIDER_PRESETS[name]
+    if transport not in ("openai_compat", "openai", "anthropic") \
+            or not base or not model:
+        return None
+    env = {k: os.environ.get(k, "") for k in envs}
+    base = next((env[k] for k in envs if k.endswith(("_BASE_URL", "_API_BASE"))), "") or base
+    model = next((env[k] for k in envs if k.endswith("_MODEL") and env[k]), "") or model
+    key = next((env[k] for k in envs if k.endswith("_API_KEY")), "")
+    if not key and not base.startswith(("http://127.", "http://localhost")):
+        return None                     # remote without a key = unconfigured
+    if transport == "anthropic":
+        a = Anthropic(base, key, model, timeout)
+    else:
+        a = OpenAICompat(base, key, model, timeout, name=name)
+    a.name = name
+    return a
 
 
 def resolve_adapter(requested: str | None, settings: Settings,
                     adapters: dict[str, BaseAdapter]) -> BaseAdapter:
     if requested:
-        key = _ALIAS.get(requested.lower(), requested.lower())
+        name = requested.lower()
+        preset = PROVIDER_PRESETS.get(name)
+        key = preset[0] if preset else name
         if key in adapters:
             return adapters[key]
+        built = _build_from_preset(name, settings.decision_timeout_s) \
+            if preset else None
+        if built is not None:
+            return built
         # requested but unconfigured -> fall through to auto (never 500)
     mode = settings.decider
     if mode != "auto" and mode in adapters:

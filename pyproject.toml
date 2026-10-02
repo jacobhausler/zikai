@@ -1,6 +1,6 @@
 [project]
 name = "zikai"
-version = "0.1.0"
+version = "1.0.0"
 description = "Decisions-API service that maps the chineseidioms.com chengyu corpus into a shallow clustered decision tree and serves the most applicable idiom for any text."
 requires-python = ">=3.10"
 dependencies = [

@@ -38,6 +38,10 @@ class Settings(BaseSettings):
     laya_api_key: str = ""       # generic bearer key for the compat endpoint
     laya_model: str = "qwen38-next"
     decision_timeout_s: float = 20.0
+    # optional vendor rerank stage: "cohere_rerank" | "jina_rerank" (must
+    # match a PROVIDER_PRESETS rerank row whose key env must also be set);
+    # "" = off. Fail-open: a rerank miss never changes behaviour.
+    rerank_transport: str = ""
 
     @property
     def key_set(self) -> set[str]:

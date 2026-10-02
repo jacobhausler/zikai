@@ -12,7 +12,7 @@ import hashlib
 import time
 import uuid
 
-from .adapters import BaseAdapter, Lexical, resolve_adapter
+from .adapters import BaseAdapter, Lexical, rerank, resolve_adapter
 from .config import Settings
 from .tree import MAX_TREE_DEPTH, cgram_sim, chargrams, dice, load_json, words
 
@@ -127,6 +127,22 @@ class Engine:
                 break
         return list(merged.items())
 
+    def _vendor_rerank(self, text: str,
+                       shortlist: list[tuple[str, float]]) -> list[tuple[str, float]]:
+        """Optional vendor rerank of the shortlist, env-gated via
+        ZIKAI_RERANK_TRANSPORT (must name a *_rerank PROVIDER_PRESETS row)
+        + that row's key env. Fail-open: any miss returns the order given."""
+        transport = self.settings.rerank_transport
+        if not transport:
+            return shortlist
+        docs = [f"{self.corpus.get(s, {}).get('hanzi', '')} "
+                f"{self.corpus.get(s, {}).get('meaning', '')}"
+                for s, _ in shortlist]
+        order = rerank(transport, text, docs, self.settings.decision_timeout_s)
+        if not order or sorted(order) != list(range(len(shortlist))):
+            return shortlist            # bad/missing result: keep our order
+        return [shortlist[i] for i in order]
+
     def _final_pick(self, text: str, adapter: BaseAdapter,
                     ranked: list[tuple[str, float]],
                     members: list[str]) -> tuple[str, float, list, bool]:
@@ -136,7 +152,7 @@ class Engine:
         a by-design skip (dominant lexical signal) is not a degrade."""
         if not ranked:
             return (members[0] if members else ""), 0.0, [], False
-        shortlist = ranked[:12]
+        shortlist = self._vendor_rerank(text, ranked[:12])
         # A dominant lexical score (hanzi echo, exact slug, strong word
         # overlap) needs no judge — scores sit under ~0.2 without it, so 0.4
         # only fires on signals the decider could only contradict.
