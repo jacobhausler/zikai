@@ -8,3 +8,8 @@ data/nightly.log
 scripts/gh-cred.sh
 data/nightly.state
 guild-post*.txt
+
+*.egg-info/
+__pycache__/
+*.pyc
+.venv/
