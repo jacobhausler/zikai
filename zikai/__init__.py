@@ -6,4 +6,8 @@ decisions-style API with pluggable decider adapters (OpenAI, Anthropic,
 OpenAI-compatible endpoints incl. laya/sglang/together/fireworks/groq,
 or a zero-key lexical decider).
 """
-__version__ = "0.1.0"
+try:  # package metadata is the SINGLE source; the string can never lag a release
+    from importlib.metadata import version as _pkg_version
+    __version__ = _pkg_version("zikai")
+except Exception:  # running from source without install metadata
+    __version__ = "0.0.0+unknown"

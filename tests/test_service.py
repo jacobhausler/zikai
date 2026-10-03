@@ -180,3 +180,13 @@ def test_hard_board_wins_are_pinned():
                  "model calls per document, got this month's throughput, and "
                  "now the lake is empty for next month.")
     assert rk[0][0] == "jie-ze-er-yu"
+
+
+def test_healthz_version_matches_package_metadata():
+    # Austin's catch (2026-10-03): pyproject said 1.0.0, healthz printed 0.1.0.
+    # The running artifact's word must be the package's word — derive, don't lag.
+    import tomllib, pathlib
+    want = tomllib.loads(
+        (pathlib.Path(__file__).resolve().parent.parent / "pyproject.toml")
+        .read_text())["project"]["version"]
+    assert __import__("zikai").__version__ == want
