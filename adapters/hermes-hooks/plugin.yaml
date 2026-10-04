@@ -1,0 +1,16 @@
+name: zikai-oracle-hook
+version: 0.1.0
+description: Append an oracle idiom to Discord lesson/verdict replies in the clankville profile (fail-open, never gates the send)
+description_long: |
+  transform_llm_output hook: when a final Discord reply in this profile reads
+  like a lesson/verdict/receipt moment and does not already carry an idiom,
+  ask the zikai service and append one blockquote line:
+      > oracle: 成語 (pīnyīn) — gloss [lexical]
+  Fail-open by law: any error, timeout, off-platform fire, or already-decorated
+  reply returns None and the send proceeds untouched. The hook never refuses a
+  send and never invents an idiom from memory (the never-remember law).
+author: "haus-exec"
+license: MIT
+requires_hermes: ">=0.21"
+provides_hooks:
+  - transform_llm_output
