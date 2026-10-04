@@ -71,6 +71,22 @@ def test_decided_style_quote_never_double():
         platform="discord") is None
 
 
+def test_guards_match_uses_not_mentions():
+    """The closeout-miss: a post that DESCRIBES the guard in backticks is
+    talking about the sentinel, not riding it — must still decorate."""
+    _with(FakeClient())
+    mentioning = (VERDICT + " The guard skips any post carrying `> oracle:` "
+                  "or the product shape `成語 (pīnyīn) — gloss`: those are "
+                  "uses; this sentence only mentions them, so it still earns "
+                  "its epigraph, verdict and law and postmortem notwithstanding.")
+    out = hk._decorate(mentioning, platform="discord")
+    assert out is not None and "\n\n> oracle: " in out
+    # but the real thing, unbackticked, still suppresses
+    assert hk._decorate(mentioning.replace(
+        "`> oracle:`", "\n> oracle: 刻舟求劍 (kè zhōu qiú jiàn) — done"),
+        platform="discord") is None
+
+
 def test_plain_hanzi_in_prose_still_decorates():
     """Austin's over-suppression catch: hanzi as a term in prose is not a
     quote — the moment still earns its decided epigraph."""

@@ -5,10 +5,12 @@ the callback fires only when platform == "discord".
 Used-but-not-overused gates, in order:
   1. platform guard (discord only)
   2. moment gate: the reply must read like a lesson/verdict/receipt moment
-  3. already-quoted guard: an `oracle:`/`Zikai:` line anywhere, or a quoted
-     idiom of the shape 成語 (pinyin) — near the tail => skip. (Bare hanzi in
-     the BODY does NOT suppress: a post that uses a hanzi term in prose still
-     deserves a decided epigraph — only a DECIDED-STYLE quote means it rode.)
+  3. already-quoted guard (runs on CODE-STRIPPED text — mentions in backticks
+     don't count, only uses): an actual `> oracle:` blockquote line anywhere,
+     or a quote of the oracle's own product shape — 成語 (pinyin) — gloss —
+     near the tail. Bare hanzi in the BODY is a term in prose, not a quote:
+     it does NOT suppress (austin's over-suppression finding — the writer
+     using 系統 in an argument still deserves a decided epigraph).
   4. once per turn (core fires transform_llm_output once per turn_id anyway)
 Fail-open by law (austin's objection, conceded): every path that isn't a
 clean append returns None — the send is NEVER gated, and an idiom is never
@@ -33,9 +35,19 @@ _MOMENT = re.compile(
     r"\b(lesson|verdict|receipt|postmortem|root cause|law\b|estate law|adopted"
     r"|green[- ]counter|standing rule|the rule (?:now|here) reads"
     r"|practice (?:is|on)|books? closed)\b|定律|守则|事毕矣|開。", re.IGNORECASE)
-# a quote has already rode if it looks like the oracle's own product shape
+# a quote already rode only if it wears the oracle's product shape —
+# checked on CODE-STRIPPED text: a guard must match USES, not MENTIONS
+# (austin's closeout was missed because he wrote `> oracle:` in backticks
+# while describing the guard; the sentinel tripped on its own description)
 _QUOTED_TAIL = re.compile(r"[\u4e00-\u9fff]{2,}\s*\([^)]*\)\s*—")
-_ORACLED = re.compile(r"oracle:|Zikai:|— zikai ·", re.IGNORECASE)
+_ORACLED = re.compile(r"^\s*> oracle:", re.IGNORECASE | re.MULTILINE)
+_CODE = re.compile(r"`{1,3}[^`\n]*`{1,3}")
+
+
+def _visible(text: str) -> str:
+    """The post with code spans/fences blanked — guards ask what the post
+    SAYS, not what it TYPES ABOUT."""
+    return _CODE.sub(" ", text)
 
 _client = None
 _client_failed = False
@@ -125,8 +137,9 @@ def _decorate(response_text: str, **_ignored):
             return None
         if not response_text or len(response_text) < 200:
             return None                       # chatter is not a verdict
-        tail = response_text[-1200:]
-        if _ORACLED.search(response_text) or _QUOTED_TAIL.search(tail):
+        vis = _visible(response_text)         # guards match uses, not mentions
+        tail = vis[-1200:]
+        if _ORACLED.search(vis) or _QUOTED_TAIL.search(tail):
             return None                       # a quote already rode: no double
         if not _MOMENT.search(tail):
             return None                       # not a lesson moment
