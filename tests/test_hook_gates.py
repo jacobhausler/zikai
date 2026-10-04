@@ -118,6 +118,18 @@ def test_armed_line_reports_live_lane():
     assert "lane=DOWN" in hk._armed_line()  # enabled-but-deaf announces itself
 
 
+def test_hook_budget_is_measured_not_inherited():
+    """3s was an inherited guess; the GPU lane answers in 17–32s (5 samples).
+    Default budget must clear the server's decide cap, and both overrides
+    (env, pointer file) must be honored."""
+    assert hk._decide_budget({}) >= 35.0
+    assert hk._decide_budget({"timeout": 5}) == 5.0
+    os.environ["ZIKAI_HOOK_TIMEOUT_S"] = "12"
+    assert hk._decide_budget({}) == 12.0
+    os.environ["ZIKAI_HOOK_TIMEOUT_S"] = "garbage"
+    assert hk._decide_budget({}) >= 35.0    # garbage falls back, never 0
+
+
 def _get_client_fresh():
     hk._client = None
     hk._client_failed = False

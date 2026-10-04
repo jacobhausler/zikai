@@ -97,8 +97,23 @@ def _get_client(cfg=None):
         except Exception:
             _client_failed = True
             return None
-    _client = Client(timeout=3.0)
+    _client = Client(timeout=_decide_budget(cfg))
     return _client
+
+
+def _decide_budget(cfg) -> float:
+    """Hook latency budget = the lane's decide cap + transport margin, both
+    measured (owner's sizing law): GPU answers ran 17–32s live; the server
+    caps decide at ZIKAI_DECISION_TIMEOUT_S*nodes + overhead ≈ 32.2s, so the
+    honest default is 40s (one decide + a hair; the client's single network
+    retry can stack a second try, so the effective ceiling is 2x this).
+    Pointer file `timeout` or ZIKAI_HOOK_TIMEOUT_S override. 3s was the
+    inherited guess that made the hook silent-vapor."""
+    raw = os.environ.get("ZIKAI_HOOK_TIMEOUT_S") or cfg.get("timeout") or 40.0
+    try:
+        return float(raw)
+    except (TypeError, ValueError):
+        return 40.0
 
 
 def _decorate(response_text: str, **_ignored):
@@ -149,11 +164,12 @@ def _armed_line() -> str:
                     if p.exists() and json_url(p)), "MISSING")
     else:
         src = "MISSING (no url; hook no-ops)"
-    url = os.environ.get("ZIKAI_URL", "?")
+    url = os.environ.get("ZIKAI_URL") or (cfg.get("url") or "?")
     try:
         ok = _get_client(cfg) is not None
     except Exception:
         ok = False
+    url = os.environ.get("ZIKAI_URL", url)
     live = ok and url != "?" and _reachable(url)
     return (f"[zikai-oracle-hook] armed: config={src} url={url} "
             f"client={'ok' if ok else 'DEAF (fail-open no-op)'} "
