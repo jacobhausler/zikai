@@ -9,6 +9,14 @@ description_long: |
   Fail-open by law: any error, timeout, off-platform fire, or already-decorated
   reply returns None and the send proceeds untouched. The hook never refuses a
   send and never invents an idiom from memory (the never-remember law).
+  INSTALL: copy this directory into ONE profile's plugins/ dir, drop a 0600
+  `zikai-hook.json` BESIDE the plugin: {"url": "...", "key": "...", "repo":
+  "/path/to/zikai/checkout"} — `repo` is needed only if `zikai` is not
+  pip-installed in the gateway's python. $HERMES_HOME/plugins/zikai-oracle-hook/
+  is the fallback search path; env ZIKAI_URL/ZIKAI_KEY win over both. Without
+  a resolvable url the hook prints `[zikai-oracle-hook] armed: ... DEAF` at
+  register — check that line in the gateway log after enabling; an enabled
+  plugin with lane=DOWN decorates nothing. Kill switch: ZIKAI_HOOK=0.
 author: "haus-exec"
 license: MIT
 requires_hermes: ">=0.21"
