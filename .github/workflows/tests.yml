@@ -1,0 +1,20 @@
+name: tests
+# python:3.12-slim (Austin's crun vantage) has no git binary — the hook's
+# stat garnish is optional by law, and ubuntu-latest ships git anyway.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          python -m venv .venv
+          .venv/bin/pip install -e ".[dev]"
+          .venv/bin/python -m pytest tests -q
