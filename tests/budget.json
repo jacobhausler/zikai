@@ -1,0 +1,8 @@
+{
+  "schema": "estate-ci/budget-v0",
+  "mode": "observe",
+  "pr_gate_wall_s": 60,
+  "runner_min_per_pr": 1,
+  "runner_min_wk": 10,
+  "basis": "NEXTGEN-CI (b) row zikai, cut-time interim: wall-min budget 1.0 (60 s floor; measured wall 0.38, expected 0.25 once the venv is cached \u2014 provisioning is 83% of wall); runner-min/PR budget 1 (measured 0.5, target ~0.4); weekly 10 per the D18/D17 table (dormant four ~10/wk). Re-cut from the P1 observe week per budget basis law (S5): budget = measured p95 x 1.15 per component (provisioning p95 + suite p95)."
+}

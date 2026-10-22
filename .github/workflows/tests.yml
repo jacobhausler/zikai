@@ -1,4 +1,9 @@
 name: tests
+# ci-contract: estate-ci@v1
+# P1 observe (NEXTGEN-CI (e)): this file declares the pin the P2 cutover PR will
+# call (tests/budget.json at the interim (b) numbers). The `uses:` of the reusable
+# arrives with the cutover, at which point preflight verifies this line agrees
+# with the reusable ref, per law.
 # python:3.12-slim (Austin's crun vantage) has no git binary — the hook's
 # stat garnish is optional by law, and ubuntu-latest ships git anyway.
 on:
