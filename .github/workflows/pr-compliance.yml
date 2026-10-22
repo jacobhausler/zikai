@@ -14,7 +14,10 @@ on:
 permissions:
   contents: read
 jobs:
-  diagram-check:
+  # Estate-CI gen-4 P0 (NEXTGEN-CI.md (d)): the single required check per repo
+  # is named `gates`. Pure rename of the emitted check, ruleset flip in the same
+  # PR (migration law); teeth, triggers, and failure semantics unchanged.
+  gates:
     runs-on: ubuntu-latest
     env:
       BODY: ${{ github.event.pull_request.body }}
