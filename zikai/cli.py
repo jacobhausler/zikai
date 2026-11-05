@@ -96,8 +96,10 @@ def _nightly(args) -> int:
     out = load_engine(get_settings()).decide("The team kept guessing without data.")
     assert out["idiom"]["slug"], "empty decision"
     print(f"[nightly] self-test pick: {hydrate(out['idiom'], level='text')}")
-    # 5. optional git push (current branch; no --branch games: one branch,
-    # honest history of mapping snapshots)
+    # 5. optional git push -> the `data` branch. The `gates` ruleset
+    # (25602389) targets only ~DEFAULT_BRANCH with no bypass actors, so a
+    # direct push to main can never land; data snapshots ride origin/data
+    # and merge into main through the PR lane when wanted (est-k0euv).
     if args.push:
         g = lambda *a: subprocess.run(["git", *a], cwd=REPO_ROOT, check=True)  # noqa: E731
         g("add", "data/corpus.json", "data/decision_tree.json",
@@ -109,11 +111,8 @@ def _nightly(args) -> int:
         else:
             from datetime import date
             g("commit", "-m", f"data: mapping snapshot {date.today().isoformat()}")
-            branch = subprocess.run(
-                ["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=REPO_ROOT,
-                capture_output=True, text=True).stdout.strip()
-            g("push", "origin", branch)
-            print(f"[nightly] pushed snapshot to origin/{branch}")
+            g("push", "origin", "HEAD:data")
+            print("[nightly] pushed snapshot to origin/data")
     return 0
 
 
