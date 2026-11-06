@@ -107,12 +107,17 @@ def _nightly(args) -> int:
         r = subprocess.run(["git", "diff", "--cached", "--quiet"],
                            cwd=REPO_ROOT)
         if r.returncode == 0:
-            print("[nightly] no data changes — nothing to push")
-        else:
+            print("[nightly] no new data changes — syncing pending commits")
+        elif r.returncode == 1:
             from datetime import date
             g("commit", "-m", f"data: mapping snapshot {date.today().isoformat()}")
-            g("push", "origin", "HEAD:data")
-            print("[nightly] pushed snapshot to origin/data")
+        else:
+            r.check_returncode()
+        # Sync even when the artifacts are unchanged: a previous rejected push
+        # leaves a committed snapshot that still needs delivery. Never force.
+        g("pull", "--rebase", "origin", "data")
+        g("push", "origin", "HEAD:data")
+        print("[nightly] synced snapshot to origin/data")
     return 0
 
 
