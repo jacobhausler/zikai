@@ -77,15 +77,31 @@ def load_records(path: str | Path) -> list[dict]:
     return list(out.values())
 
 
-def build_corpus(records: list[dict]) -> dict:
-    """Flat slug->record corpus (records are already hydrated at scrape time)."""
-    return {r["slug"]: {k: v for k, v in r.items() if k != "ok"}
-            for r in records}
+def build_corpus(records: list[dict],
+                 aliases_path: str | Path | None = None) -> dict:
+    """Flat slug->record corpus (records are already hydrated at scrape
+    time), merged with the hand-curated English alias overlay
+    (`data/aliases.json`: scenario keywords the site's prose never uses,
+    e.g. 画饼充饥 ← "draw cake hunger"). A missing/broken overlay adds no
+    aliases and never breaks the build — fail-open, same law as the API."""
+    out = {r["slug"]: {k: v for k, v in r.items() if k != "ok"}
+           for r in records}
+    path = Path(aliases_path) if aliases_path else \
+        Path(__file__).resolve().parent.parent / "data" / "aliases.json"
+    try:
+        aliases = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        aliases = {}
+    for slug, kw in aliases.items():
+        if slug in out:
+            out[slug]["aliases"] = kw   # unknown slugs are silently dropped
+    return out
 
 
 def _tokens_for(r: dict) -> set[str]:
     return words(r.get("meaning")) | words(r.get("literal")) | words(
-        (r.get("origin") or "")[:400]) | words(r.get("meaning_metaphoric"))
+        (r.get("origin") or "")[:400]) | words(r.get("meaning_metaphoric")) \
+        | words(r.get("aliases"))
 
 
 def _label_cluster(rows: list[dict], taken: set[str]) -> tuple[str, list[str]]:

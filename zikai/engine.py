@@ -17,6 +17,16 @@ from .config import Settings
 from .tree import MAX_TREE_DEPTH, cgram_sim, chargrams, dice, load_json, words
 
 
+def _calibrate(ranked: list[tuple[str, float]]) -> float:
+    """Honest confidence from the FINAL order: margin over the runner-up
+    plus raw signal. The old flat 0.45 floor on judge picks reported the
+    cluster prior, not a decision (haus-exec audit, 2026-11): a flat
+    twelve-way shortlist now scores flat — and that is the no_fit signal."""
+    s1 = ranked[0][1]
+    s2 = ranked[1][1] if len(ranked) > 1 else 0.0
+    return round(min(0.95, max(0.0, 6 * (s1 - s2) + s1)), 3)
+
+
 class Engine:
     def __init__(self, corpus: dict[str, dict], tree: dict,
                  settings: Settings, adapters: dict[str, BaseAdapter]):
@@ -66,6 +76,10 @@ class Engine:
             "cluster": d2["answer"],
             "theme": theme_opt["label"],
             "confidence": confidence,
+            # Additive field: below the floor the oracle REFUSES to
+            # decorate — clients should ship without an idiom (fail-open
+            # law, pointed at the decider for once).
+            "no_fit": confidence < self.settings.no_fit_floor,
             "runner_ups": [s for s, _ in ranked[1:4]],
             "decider": label,
             "latency_ms": int((time.time() - t0) * 1000),
@@ -157,7 +171,7 @@ class Engine:
         # overlap) needs no judge — scores sit under ~0.2 without it, so 0.4
         # only fires on signals the decider could only contradict.
         if adapter.name == "lexical" or shortlist[0][1] >= 0.4:
-            return shortlist[0][0], round(shortlist[0][1], 3), ranked, False
+            return shortlist[0][0], _calibrate(shortlist), ranked, False
         opts = [{"value": slug,
                  "label": f"{r.get('hanzi','')} {r.get('pinyin','')} — {r.get('meaning','')}",
                  "hint": f"literal: {r.get('literal') or r.get('meaning')}"}
@@ -169,9 +183,11 @@ class Engine:
         if d.value in {s for s, _ in shortlist}:
             reordered = ([t for t in shortlist if t[0] == d.value]
                          + [t for t in shortlist if t[0] != d.value])
-            return d.value, max(round(shortlist[0][1], 3), 0.45), \
+            # No 0.45 floor: a judge pick out of a flat shortlist earns
+            # only its margin (see _calibrate).
+            return d.value, _calibrate(reordered), \
                 reordered + ranked[len(shortlist):], False
-        return shortlist[0][0], round(shortlist[0][1], 3), ranked, True
+        return shortlist[0][0], _calibrate(shortlist), ranked, True
 
     # ------------------------------------------------------------------
     def _rank(self, text: str, boost: set[str] | None = None) -> list[tuple[str, float]]:
@@ -191,9 +207,15 @@ class Engine:
             if qcjk and hz:
                 hzc = set(hz)
                 hz_bonus = 0.8 * len(qcjk & hzc) / len(qcjk | hzc)
+            al = r.get("aliases")
+            # Aliases are curated scenario keywords — score them as their
+            # own lane; buried in the origin blob their dice share dilutes
+            # to noise (measured: 0.06 vs 0.16 additive).
+            al_bonus = 0.4 * dice(tw, words(al)) if al else 0.0
             score = (0.5 * dice(tw, words(blob))
                      + 0.3 * cgram_sim(tc, blob)
                      + hz_bonus
+                     + al_bonus
                      + (0.15 if s in tl else 0.0)
                      + (0.05 if boost and s in boost else 0.0))
             scored.append((s, score))

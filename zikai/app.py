@@ -164,7 +164,7 @@ def create_app(engine: Engine | None = None) -> FastAPI:
         for slug, r in e.corpus.items():
             hay = " ".join(str(r.get(k) or "") for k in
                            ("slug", "hanzi", "pinyin", "meaning", "literal",
-                            "theme")).lower()
+                            "theme", "aliases")).lower()
             if ql in hay or (len(ql) > 3 and ql in r.get("slug", "").lower()):
                 scored.append({k: r.get(k) for k in
                                ("slug", "hanzi", "pinyin", "meaning", "theme",

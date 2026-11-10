@@ -41,3 +41,6 @@ the oracle is trusted because it says how little it is sure of.
   line citing a `+fallback` answer as "the model's judgment" is a lie.
 - **Degrade is honest.** A `[lexical]`-suffixed line is still citable;
   mark it or let the suffix speak.
+- **`no_fit` is an answer.** When the oracle returns `no_fit` (or a weak
+  `confidence`), the situation did not earn an idiom — ship the reply
+  bare, same dress code as `oracle: unavailable`.

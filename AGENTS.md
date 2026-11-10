@@ -47,6 +47,8 @@ Oracle down ⇒ `oracle: unavailable`, exit 1 — never a remembered idiom;
 ship without one. Server-side: a failed vendor decider percolates nowhere,
 each node falls back to lexical; the API never 500s because a vendor sneezed.
 The `decider:` label prints VERBATIM (`+fallback`/`+judge_lexical` are data).
+A weak decision says so too: below `ZIKAI_NO_FIT_FLOOR` the response carries
+`"no_fit": true` — same dress code, ship without an idiom.
 
 ## Where to read next
 

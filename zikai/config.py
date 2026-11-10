@@ -38,6 +38,9 @@ class Settings(BaseSettings):
     laya_api_key: str = ""       # generic bearer key for the compat endpoint
     laya_model: str = "qwen38-next"
     decision_timeout_s: float = 20.0
+    # /decide marks no_fit below this calibrated confidence (see
+    # engine._calibrate); 0 disables the flag.
+    no_fit_floor: float = 0.25
     # optional vendor rerank stage: "cohere_rerank" | "jina_rerank" (must
     # match a PROVIDER_PRESETS rerank row whose key env must also be set);
     # "" = off. Fail-open: a rerank miss never changes behaviour.

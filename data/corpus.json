@@ -215,6 +215,7 @@
   "url": "https://www.chineseidioms.com/blog/an-bu-dang-che"
  },
  "an-bu-jiu-ban": {
+  "aliases": "follow routine procedure step by step conventional orderly plan roll",
   "date_modified": "2025-01-01",
   "example_en": "The project proceeded methodically through each phase.",
   "example_zh": "项目按部就班地进行每个阶段。",
@@ -1332,6 +1333,7 @@
   "url": "https://www.chineseidioms.com/blog/ban-jin-ba-liang"
  },
  "ban-men-nong-fu": {
+  "aliases": "show off brag expert master carpenter axe pedant amateur skill technique woodworker guild handle",
   "date_modified": "2025-01-01",
   "example_en": "The amateur poet recited his work at the gathering of celebrated writers",
   "example_zh": "这位业余诗人在著名作家的聚会上朗诵了自己的作品",
@@ -1762,6 +1764,7 @@
   "url": "https://www.chineseidioms.com/blog/bei-dao-er-chi"
  },
  "bei-gong-she-ying": {
+  "aliases": "bow shadow cup snake needlessly suspicious paranoid false alarm anxiety",
   "date_modified": "2025-01-01",
   "example_en": "The team's excessive caution about minor changes paralyzed decision-making",
   "example_zh": "团队对小变化的过度警惕导致决策瘫痪",
@@ -9061,6 +9064,7 @@
   "url": "https://www.chineseidioms.com/blog/duan-zhang-qu-yi"
  },
  "dui-niu-tan-qin": {
+  "aliases": "cow lute argue reason audience wrong waste talking explain",
   "date_modified": "2025-01-01",
   "example_en": "The professor's advanced theory completely confused the elementary students",
   "example_zh": "教授的高级理论让小学生完全困惑不解",
@@ -14988,6 +14992,7 @@
   "url": "https://www.chineseidioms.com/blog/hu-tou-she-wei"
  },
  "hua-bing-chong-ji": {
+  "aliases": "draw painted cake bread flatbread hunger promise hollow paper visualize empty satisfy nothing",
   "date_modified": "2025-01-01",
   "example_en": "The company offered empty promises instead of actual raises",
   "example_zh": "公司提供空洞的承诺而不是实际的加薪",
@@ -15202,6 +15207,7 @@
   "url": "https://www.chineseidioms.com/blog/hua-long-dian-jing"
  },
  "hua-she-tian-zu": {
+  "aliases": "snake feet superfluous extra ruin overdo gilding lily",
   "date_modified": "2025-01-01",
   "example_en": "The excessive explanations only confused the simple concept",
   "example_zh": "过多的解释反而让简单的概念变得混乱",
@@ -19155,6 +19161,7 @@
   "url": "https://www.chineseidioms.com/blog/ke-gu-ming-xin"
  },
  "ke-zhou-qiu-jian": {
+  "aliases": "mark boat sinking sword lost search rigid foolish outdated method",
   "date_modified": "2025-01-01",
   "example_en": "The company kept using outdated market research to make current business decisions",
   "example_zh": "公司继续使用过时的市场研究来做出当前的商业决策",
@@ -26580,6 +26587,7 @@
   "url": "https://www.chineseidioms.com/blog/qu-gao-he-gua"
  },
  "qu-tu-xi-xin": {
+  "aliases": "bend chimney move firewood precaution prevention warn early heed warning disaster before",
   "date_modified": "2025-01-01",
   "example_en": "The engineer who warned about the fault was not invited to the review",
   "example_zh": "当初提出隐患的工程师，事后并没有被请去参加复盘",
@@ -30060,6 +30068,7 @@
   "url": "https://www.chineseidioms.com/blog/shou-zheng-bu-e"
  },
  "shou-zhu-dai-tu": {
+  "aliases": "stub tree stump waiting rabbit luck opportunistic lazy",
   "date_modified": "2025-01-01",
   "example_en": "Instead of developing new skills, he just waited for promotions to come",
   "example_zh": "他没有提升技能，只是等待升职机会",
@@ -33194,6 +33203,7 @@
   "url": "https://www.chineseidioms.com/blog/tuo-ying-er-chu"
  },
  "wan-bi-gui-zhao": {
+  "aliases": "return intact whole lend treasure jade borrow",
   "date_modified": "2025-01-01",
   "example_en": "The courier safely delivered the precious artifact to the museum",
   "example_zh": "快递员安全地将珍贵文物送到了博物馆",
@@ -38260,6 +38270,7 @@
   "url": "https://www.chineseidioms.com/blog/yan-chuan-shen-jiao"
  },
  "yan-er-dao-ling": {
+  "aliases": "ear steal bell deceive oneself self fooling hiding",
   "date_modified": "2025-01-01",
   "example_en": "The company ignored customer complaints while claiming excellent service",
   "example_zh": "公司无视客户投诉，同时声称提供卓越服务",

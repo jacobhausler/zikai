@@ -1,0 +1,16 @@
+{"text": "Paint a flatbread on the wall to cure hunger", "expect": "pick", "gold": "hua-bing-chong-ji"}
+{"text": "Drawing a cake to cure hunger", "expect": "pick", "gold": "hua-bing-chong-ji"}
+{"text": "Empty promises that satisfy nothing", "expect": "pick", "gold": "hua-bing-chong-ji"}
+{"text": "He warned about the chimney and nobody listened until the house burned", "expect": "pick", "gold": "qu-tu-xi-xin"}
+{"text": "Showing amateur skills in front of experts", "expect": "pick", "gold": "ban-men-nong-fu"}
+{"text": "He bragged his axe technique to the carpenter's guild", "expect": "pick", "gold": "ban-men-nong-fu"}
+{"text": "Lend the treasure and get it back intact", "expect": "pick", "gold": "wan-bi-gui-zhao"}
+{"text": "Marking the boat to find the dropped sword", "expect": "pick", "gold": "ke-zhou-qiu-jian"}
+{"text": "刻舟求剑", "expect": "pick", "gold": "ke-zhou-qiu-jian"}
+{"text": "Waiting by a tree stump for another rabbit", "expect": "pick", "gold": "shou-zhu-dai-tu"}
+{"text": "Stopping your ears to steal a bell", "expect": "pick", "gold": "yan-er-dao-ling"}
+{"text": "Drawing legs on a snake", "expect": "pick", "gold": "hua-she-tian-zu"}
+{"text": "Playing the lute to a cow", "expect": "pick", "gold": "dui-niu-tan-qin"}
+{"text": "My daughter bought a 200kW AI rack for a room rated 40kW", "expect": "no_fit", "gold": null}
+{"text": "The quarterly earnings report was released on Tuesday", "expect": "no_fit", "gold": null}
+{"text": "Let's sync the calendar for tomorrow's standup", "expect": "no_fit", "gold": null}

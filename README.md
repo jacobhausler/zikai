@@ -45,7 +45,7 @@ python -m venv .venv && .venv/bin/pip install -e .[dev]
 zikai build                # records.jsonl -> corpus.json + decision_tree.json
 zikai serve --port 8077    # API + dashboard at http://localhost:8077/
 zikai decide "He bragged to the master" --level text
-pytest                     # 64 tests, zero keys required (lexical decider)
+pytest                     # 94 tests, zero keys required (lexical decider)
 ```
 
 ## Endpoints
@@ -138,7 +138,7 @@ so the API never returns 500 because a vendor sneezed.**
 
 - `full` — everything: hanzi, pinyin, literal + metaphoric meaning, origin,
   examples (en/zh), FAQ, related slugs, term code, source URL, provenance
-  (`decision_path`, `cluster`, `runner_ups`, `confidence`, `latency_ms`)
+  (`decision_path`, `cluster`, `runner_ups`, `confidence`, `no_fit`, `latency_ms`)
 - `compact` — decision essentials
 - `text` — one line: `按部就班 (àn bù jiù bān) — Follow established procedures [slug]`
 - `slug` — machine-to-machine minimal
@@ -176,8 +176,9 @@ zikai/            app.py (API) engine.py (tree walk) adapters.py (vendor layer)
                   tree.py (cluster build) shapes.py (levels) config.py cli.py
 pipeline/         collect_slugs.py (sitemap) scrape.py (hydrating scraper)
 data/             records.jsonl corpus.json decision_tree.json (refreshed nightly)
+                  aliases.json (hand-curated EN recall keywords, merged at build)
 dashboard/        index.html
-tests/            64 tests, no keys needed
+tests/            94 tests, no keys needed; tests/golden.jsonl gates recall + calibration
 ```
 
 ## Harness adapters (one core, three spins)
@@ -217,8 +218,11 @@ Claude Agent SDK, Google ADK), and services (n8n, Open WebUI, ChatGPT, MCP).
 - Corpus fields are copied verbatim from source JSON-LD/rendered sections;
   the service never invents metadata. Source attribution rides in every
   record (`url`, `term_code`).
-- `confidence` is the lexical score of the winner, floored at 0.45 when a
-  remote decider confirmed the pick — an honest instrument, not a probability.
+- `confidence` is calibrated from the final shortlist: margin over the
+  runner-up plus raw signal (`engine._calibrate`) — an honest instrument,
+  not a probability. Below `ZIKAI_NO_FIT_FLOOR` (default 0.25) the answer
+  also carries `"no_fit": true`: the oracle's 子開 refusal — cite the
+  shortlist if you must, but it is not volunteering this idiom.
 - Self-tested eval: hanzi-echo probes 5/5 (CJK char-overlap bridges
   simplified/traditional in the ranker); plain-scenario adversarial tail
   3/5 on the free local decider — remaining misses are near-synonym theft,
